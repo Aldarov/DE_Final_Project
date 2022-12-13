@@ -1,7 +1,7 @@
-create table if not exists raw_data (
-    source varchar(100)
-    link varchar(500),
-    title varchar(max),
-    category varchar(250),
-    pub_date date,
+create table if not exists raw_data(
+    source varchar(128),
+    link varchar(512),
+    title varchar,
+    category varchar(256),
+    pub_date date
 );
