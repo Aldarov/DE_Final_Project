@@ -1,6 +1,4 @@
 # import psycopg2
-import os
-import sys
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -11,54 +9,6 @@ from airflow.exceptions import AirflowFailException
 from airflow.hooks.base_hook import BaseHook
 from airflow.models import Variable
 from download_raw_data import download_raw_data
-
-def task_to_fail():
-    raise AirflowFailException("Входной файл пуст или его не существует")
-
-def get_connection():
-    conn_name = Variable.get("conn_name")
-    print("conn_name: " + conn_name)
-    return BaseHook.get_connection(conn_name)
-
-# def create_db():
-#     connection = get_connection()
-#     conn = psycopg2.connect(host=connection.host, port=connection.port, user=connection.login, password=connection.password, database=connection.schema)
-#     cursor = conn.cursor()
-#     cursor.execute("create table if not exists data(value_1 integer NOT NULL, value_2 integer NOT NULL)")
-#     with open(path_to_file) as file:
-#         lines = file.readlines()[:-1]
-#         for line in lines:
-#             digits = line.split(' ')
-#             value_1 = int(digits[0])
-#             value_2 = int(digits[1])
-#             cursor.execute(f"insert into data(value_1, value_2) values({value_1}, {value_2})")
-#     conn.commit()
-
-#     cursor.close()
-#     conn.close()
-
-# def add_result_to_db():
-#     connection = get_connection()
-#     conn = psycopg2.connect(host=connection.host, port=connection.port, user=connection.login, password=connection.password, database=connection.schema)
-#     cursor = conn.cursor()
-#     cursor.execute("delete from data")
-#     cursor.execute("alter table data ADD COLUMN IF NOT EXISTS coef integer;")
-#     sum_col_1 = 0
-#     sum_col_2 = 0
-#     with open(path_to_file) as file:
-#         lines = file.readlines()[:-1]
-#         for line in lines:
-#             digits = line.split(' ')
-#             value_1 = int(digits[0])
-#             value_2 = int(digits[1])
-#             sum_col_1 += value_1
-#             sum_col_2 += value_2
-#             coef = sum_col_1 - sum_col_2
-#             cursor.execute(f"insert into data(value_1, value_2, coef) values({value_1}, {value_2}, {coef})")
-#     conn.commit()
-
-#     cursor.close()
-#     conn.close()
 
 
 with DAG(dag_id="update_news_category_showcase", start_date=datetime(2022, 12, 13), schedule="0 0 * * * *", catchup=False, max_active_runs=1) as dag:
