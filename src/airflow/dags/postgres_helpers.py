@@ -5,7 +5,7 @@ import psycopg2
 def get_connection():
     """Возвращает объект с параметрами соединения к БД
         Возвращает:
-            connection {object} --
+            connection: object --
                 объект типа:
                 {
                     host: str,           ip-адрес БД
@@ -28,8 +28,9 @@ def get_connection():
 def runs_sql_queries(action):
     """Выполняет действие, которое запускает одно или несколько sql-запросов в одной транзакции\n
         Входные параметры:
-            action {lambda cursor: any} -- функция в которую передается курсор psycopg2\n
-        Возвращает: any -- результат выполнения функция action
+            action: {lambda cursor: any} -- функция в которую передается курсор psycopg2\n
+        Возвращает:
+            any -- результат выполнения функция action
     """
     connection = get_connection()
     conn = psycopg2.connect(host=connection.host, port=connection.port, user=connection.login, password=connection.password, database=connection.schema)
