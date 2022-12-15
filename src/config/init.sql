@@ -1,14 +1,15 @@
 create table if not exists raw_data (
 	guid varchar(512) not NULL,
-	source_name varchar(128) NULL,
+	source_name varchar(128) not NULL,
 	link varchar(512) NULL,
 	title varchar NULL,
-	category varchar(256) NULL,
-	pub_date timestamptz NULL
+	category varchar(256) not NULL,
+	pub_date timestamptz not NULL
 );
 
+
 create table if not exists categories (
-	id int4 NOT NULL,
+	id int NOT NULL,
 	"name" varchar(128) NOT NULL,
 	CONSTRAINT categories_pk PRIMARY KEY (id)
 );
@@ -24,8 +25,9 @@ insert into categories(id, name) values(8, 'Спорт');
 insert into categories(id, name) values(9, 'Экономика и бизнес');
 insert into categories(id, name) values(10, 'Политика');
 
+
 create table if not exists sources (
-	id int4 NOT NULL,
+	id int NOT NULL,
 	"name" varchar(128) NOT NULL,
 	url_rss varchar(256) NOT null,
 	CONSTRAINT sources_pk PRIMARY KEY (id)
@@ -37,8 +39,9 @@ values
 	(2, 'vedomosti.ru', 'https://www.vedomosti.ru/rss/news'),
 	(3, 'tass.ru', 'https://tass.ru/rss/v2.xml');
 
+
 create table if not exists source_categories (
-	id int4 NOT NULL,
+	id int NOT NULL,
 	source_id int4 NOT NULL,
 	"name" varchar(128) NOT NULL,
 	CONSTRAINT source_categories_pk PRIMARY KEY (id)
@@ -97,3 +100,59 @@ values
 	(43, 3, 'Инвестиции'),
 	(44, 3, 'Личный счет'),
 	(45, 3, 'Политика');
+
+
+create table if not exists categories_relationship (
+	category_id int NOT NULL,
+	source_category_id int NULL,
+	CONSTRAINT categories_relationship_pk PRIMARY KEY (category_id,source_category_id)
+);
+
+insert into categories_relationship(category_id, source_category_id)
+values
+	(1, 1),
+	(1, 2),
+	(1, 3),
+	(1, 4),
+	(1, 15),
+	(1, 33),
+	(1, 34),
+	(1, 35),
+	(2, 5),
+	(2, 36),
+	(3, 6),
+	(3, 16),
+	(3, 37),
+	(4, 7),
+	(4, 8),
+	(4, 17),
+	(4, 18),
+	(5, 9),
+	(5, 10),
+	(5, 19),
+	(5, 20),
+	(5, 21),
+	(5, 22),
+	(5, 23),
+	(5, 24),
+	(5, 25),
+	(6, 11),
+	(6, 26),
+	(6, 27),
+	(6, 38),
+	(6, 39),
+	(7, 12),
+	(7, 28),
+	(8, 13),
+	(8, 29),
+	(9, 14),
+	(9, 30),
+	(9, 31),
+	(9, 40),
+	(9, 41),
+	(9, 42),
+	(9, 43),
+	(9, 44),
+	(10, 7),
+	(10, 32),
+	(10, 45);
