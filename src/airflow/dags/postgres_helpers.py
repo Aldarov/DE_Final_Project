@@ -1,6 +1,6 @@
 import psycopg2
-# from airflow.models import Variable
-# from airflow.hooks.base_hook import BaseHook
+from airflow.models import Variable
+from airflow.hooks.base_hook import BaseHook
 
 def get_connection():
     """Возвращает объект с параметрами соединения к БД
@@ -15,14 +15,14 @@ def get_connection():
                     password: str        пароль
                 }
     """
-    # conn_name = Variable.get("conn_name")
-    # connection = BaseHook.get_connection(conn_name)
-    class connection:
-        host: str = "localhost"
-        port: str = "5432"
-        schema: str = "news_analysis"
-        login: str = "postgres"
-        password: str = "postgres"
+    conn_name = Variable.get("conn_name")
+    connection = BaseHook.get_connection(conn_name)
+    # class connection:
+    #     host: str = "localhost"
+    #     port: str = "5432"
+    #     schema: str = "news_analysis"
+    #     login: str = "postgres"
+    #     password: str = "postgres"
     return connection
 
 def runs_sql_queries(action):

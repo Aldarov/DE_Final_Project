@@ -36,5 +36,3 @@ def download_raw_data():
                 )
 
     runs_sql_queries(insert_rss)
-
-download_raw_data()

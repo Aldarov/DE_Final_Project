@@ -1,11 +1,12 @@
 create table if not exists raw_data (
-	guid varchar(512) not NULL,
-	source_name varchar(128) not NULL,
+	guid varchar(512) NULL,
+	source_name varchar(128) NULL,
 	link varchar(512) NULL,
 	title varchar NULL,
-	category varchar(256) not NULL,
-	pub_date timestamptz not NULL
+	category varchar(256) NULL,
+	pub_date timestamptz NULL
 );
+COMMENT ON TABLE raw_data IS 'Сырые данные';
 
 
 create table if not exists categories (
@@ -13,6 +14,7 @@ create table if not exists categories (
 	"name" varchar(128) NOT NULL,
 	CONSTRAINT categories_pk PRIMARY KEY (id)
 );
+COMMENT ON TABLE categories IS 'Категории новостей';
 
 insert into categories(id, name) values(1, 'Общество');
 insert into categories(id, name) values(2, 'Интернет и СМИ');
@@ -32,6 +34,7 @@ create table if not exists sources (
 	url_rss varchar(256) NOT null,
 	CONSTRAINT sources_pk PRIMARY KEY (id)
 );
+COMMENT ON TABLE sources IS 'Источники данных';
 
 insert into sources(id, name, url_rss)
 values
@@ -42,10 +45,11 @@ values
 
 create table if not exists source_categories (
 	id int NOT NULL,
-	source_id int4 NOT NULL,
+	source_id int NOT NULL,
 	"name" varchar(128) NOT NULL,
 	CONSTRAINT source_categories_pk PRIMARY KEY (id)
 );
+COMMENT ON TABLE source_categories IS 'Категории новостей источников данных';
 
 insert into source_categories(id, source_id, name)
 values
@@ -105,8 +109,11 @@ values
 create table if not exists categories_relationship (
 	category_id int NOT NULL,
 	source_category_id int NULL,
-	CONSTRAINT categories_relationship_pk PRIMARY KEY (category_id,source_category_id)
+	CONSTRAINT categories_relationship_pk PRIMARY KEY (category_id, source_category_id),
+	CONSTRAINT categories_relationship_fk_categories FOREIGN KEY (category_id) REFERENCES categories(id),
+	CONSTRAINT categories_relationship_fk_source_categories FOREIGN KEY (source_category_id) REFERENCES source_categories(id)
 );
+COMMENT ON TABLE categories_relationship IS 'Взаимосвязь категорий новостей c категориями из разных источников данных';
 
 insert into categories_relationship(category_id, source_category_id)
 values
@@ -156,3 +163,16 @@ values
 	(10, 7),
 	(10, 32),
 	(10, 45);
+
+CREATE TABLE processed_data (
+	news_id varchar(512) NOT NULL,
+	category_id int NOT NULL,
+	source_id int NOT NULL,
+	pub_date timestamptz NOT NULL,
+	link varchar(512) NULL,
+	title varchar NULL,
+	CONSTRAINT processed_data_pk PRIMARY KEY (news_id, category_id),
+	CONSTRAINT processed_data_fk_categories FOREIGN KEY (category_id) REFERENCES categories(id),
+	CONSTRAINT processed_data_fk_sources FOREIGN KEY (source_id) REFERENCES sources(id)
+);
+COMMENT ON TABLE processed_data IS 'Обработанные данные';
