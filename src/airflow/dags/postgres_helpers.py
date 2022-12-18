@@ -1,4 +1,6 @@
 import psycopg2
+import traceback
+from log_service import add_error
 from airflow.models import Variable
 from airflow.hooks.base_hook import BaseHook
 
@@ -17,12 +19,14 @@ def get_connection():
     """
     conn_name = Variable.get("conn_name")
     connection = BaseHook.get_connection(conn_name)
+
     # class connection:
     #     host: str = "localhost"
     #     port: str = "5432"
     #     schema: str = "news_analysis"
     #     login: str = "postgres"
     #     password: str = "postgres"
+
     return connection
 
 def runs_sql_queries(action):
@@ -38,7 +42,8 @@ def runs_sql_queries(action):
         with conn:
             with conn.cursor() as cursor:
                 result = action(cursor)
-    except:
+    except Exception as e:
+        add_error(str(e), traceback.format_exc())
         raise
     finally:
         conn.close()

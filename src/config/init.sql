@@ -176,3 +176,12 @@ CREATE TABLE processed_data (
 	CONSTRAINT processed_data_fk_sources FOREIGN KEY (source_id) REFERENCES sources(id)
 );
 COMMENT ON TABLE processed_data IS 'Обработанные данные';
+
+CREATE TABLE logs (
+	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+	error_date timestamptz NOT NULL,
+	error_message varchar NOT NULL,
+	stack_trace varchar NULL,
+	CONSTRAINT logs_pk PRIMARY KEY (id)
+);
+COMMENT ON TABLE logs IS 'Логи';

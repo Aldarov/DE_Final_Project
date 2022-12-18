@@ -1,6 +1,8 @@
 from postgres_helpers import runs_sql_queries
 
 def processing_data():
+    """Обработка данных с учетом взаимосвязей категорий из разных источников"""
+
     def add_to_processed_data(cursor):
         cursor.execute("""
             insert into processed_data(news_id, source_id, category_id, pub_date, link, title)
