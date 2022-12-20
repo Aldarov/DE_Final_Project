@@ -63,6 +63,7 @@ x-airflow-common:
     - ./src/airflow/dags:/opt/airflow/dags
     - ./src/airflow/logs:/opt/airflow/logs
     - ./src/airflow/plugins:/opt/airflow/plugins
+    - .env:/opt/airflow/.env
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -97,7 +98,7 @@ services:
       - '${POSTGRES_PORT}:5432'
     volumes:
       - db:/var/lib/postgresql/data
-      - ./src/config/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:
     image: redis:latest

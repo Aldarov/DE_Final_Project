@@ -186,6 +186,26 @@ CREATE TABLE logs (
 );
 COMMENT ON TABLE logs IS 'Логи';
 
+CREATE TABLE news_by_category_showcase (
+	category_id int NOT NULL,
+	category_name varchar(128) NOT NULL,
+	source_name varchar(128) NOT NULL,
+	number_of_news_by_category int NULL,
+	number_of_news_by_category_and_source int NULL,
+	number_of_news_by_category_last_day int NULL,
+	number_of_news_by_category_and_source_last_day int NULL,
+	avg_number_of_news_by_category_per_day int NULL,
+	day_with_max_number_of_news_by_category date NULL,
+	news_count_on_mon int NULL,
+	news_count_on_tue int NULL,
+	news_count_on_wed int NULL,
+	news_count_on_thu int NULL,
+	news_count_on_fri int NULL,
+	news_count_on_sat int NULL,
+	news_count_on_sun int NULL
+);
+COMMENT ON TABLE news_by_category_showcase IS 'Витрина данных - анализ новостей по категориям';
+
 INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
 	 ('https://lenta.ru/news/2022/12/18/obstrel_dnr/',4,1,'2022-12-18 16:29:25+08','https://lenta.ru/news/2022/12/18/obstrel_dnr/','Пленный артиллерист ВСУ раскрыл подробности об обстреле Донецка'),
 	 ('https://lenta.ru/news/2022/12/18/gas/',4,1,'2022-12-18 16:15:00+08','https://lenta.ru/news/2022/12/18/gas/','Отказ Молдавии от российского газа объяснили'),
@@ -1272,4 +1292,438 @@ INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,t
 	 ('https://tass.ru/obschestvo/16631051',1,3,'2022-12-19 19:38:31+08','https://tass.ru/obschestvo/16631051','Самарская область направит около 700 млн рублей на обновление общественного транспорта'),
 	 ('https://lenta.ru/news/2022/12/19/barieri/',4,1,'2022-12-19 20:57:00+08','https://lenta.ru/news/2022/12/19/barieri/','В Белоруссии предложили снять все барьеры в интеграции с Россией'),
 	 ('https://tass.ru/obschestvo/16632105',1,3,'2022-12-19 20:59:21+08','https://tass.ru/obschestvo/16632105','В Чувашии завершили основные работы по восстановлению электроснабжения после непогоды'),
-	 ('https://tass.ru/obschestvo/16631675',1,3,'2022-12-19 20:57:25+08','https://tass.ru/obschestvo/16631675','Президент Аргентины поблагодарил Путина за поздравление с победой на чемпионате мира');
+	 ('https://tass.ru/obschestvo/16631675',1,3,'2022-12-19 20:57:25+08','https://tass.ru/obschestvo/16631675','Президент Аргентины поблагодарил Путина за поздравление с победой на чемпионате мира'),
+	 ('https://lenta.ru/news/2022/12/20/mcrct/',6,1,'2022-12-20 23:19:03+08','https://lenta.ru/news/2022/12/20/mcrct/','В России рассказали об угрозе «бани» в «Союзе МС-22»'),
+	 ('https://lenta.ru/news/2022/12/20/danet/',9,1,'2022-12-20 23:15:46+08','https://lenta.ru/news/2022/12/20/danet/','Россиянам рассказали об отсутствии дефицита новых автомобилей');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/tourists_business/',1,1,'2022-12-20 23:14:26+08','https://lenta.ru/news/2022/12/20/tourists_business/','Раскрыты самые популярные заграничные направления среди российских бизнесменов'),
+	 ('https://lenta.ru/news/2022/12/20/rezhisser_msc/',1,1,'2022-12-20 23:12:14+08','https://lenta.ru/news/2022/12/20/rezhisser_msc/','Режиссер фильма с Петровым рассказал о жизни в съемной комнате'),
+	 ('https://lenta.ru/news/2022/12/20/daly/',2,1,'2022-12-20 23:10:00+08','https://lenta.ru/news/2022/12/20/daly/','В Европарламенте обвинили западные СМИ в продажности'),
+	 ('https://lenta.ru/news/2022/12/20/nepinyai/',8,1,'2022-12-20 23:10:00+08','https://lenta.ru/news/2022/12/20/nepinyai/','Футболист сборной России описал эмоции от просмотра ЧМ по телевизору'),
+	 ('https://lenta.ru/news/2022/12/20/putin_brasil/',4,1,'2022-12-20 23:06:00+08','https://lenta.ru/news/2022/12/20/putin_brasil/','Путин позвонил президенту Бразилии Луле да Силве'),
+	 ('https://lenta.ru/news/2022/12/20/putin_brasil/',10,1,'2022-12-20 23:06:00+08','https://lenta.ru/news/2022/12/20/putin_brasil/','Путин позвонил президенту Бразилии Луле да Силве'),
+	 ('https://lenta.ru/news/2022/12/20/sestra/',4,1,'2022-12-20 23:06:00+08','https://lenta.ru/news/2022/12/20/sestra/','Сестра Ким Чен Ына нецензурно обругала критиков'),
+	 ('https://lenta.ru/news/2022/12/20/sestra/',10,1,'2022-12-20 23:06:00+08','https://lenta.ru/news/2022/12/20/sestra/','Сестра Ким Чен Ына нецензурно обругала критиков'),
+	 ('https://lenta.ru/news/2022/12/20/britain_otsenka/',4,1,'2022-12-20 23:05:00+08','https://lenta.ru/news/2022/12/20/britain_otsenka/','Великобритания оценила вероятность участия Белоруссии в конфликте на Украине'),
+	 ('https://lenta.ru/news/2022/12/20/britain_otsenka/',10,1,'2022-12-20 23:05:00+08','https://lenta.ru/news/2022/12/20/britain_otsenka/','Великобритания оценила вероятность участия Белоруссии в конфликте на Украине');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/wna22/',9,1,'2022-12-20 23:03:55+08','https://lenta.ru/news/2022/12/20/wna22/','Сбер удостоен трех наград премии Wealth Navigator Awards'),
+	 ('https://lenta.ru/news/2022/12/20/kosovo_kurti/',4,1,'2022-12-20 23:03:00+08','https://lenta.ru/news/2022/12/20/kosovo_kurti/','Премьер Косова обвинил Россию в разжигании войны на Балканах'),
+	 ('https://lenta.ru/news/2022/12/20/kosovo_kurti/',10,1,'2022-12-20 23:03:00+08','https://lenta.ru/news/2022/12/20/kosovo_kurti/','Премьер Косова обвинил Россию в разжигании войны на Балканах'),
+	 ('https://lenta.ru/news/2022/12/20/mogilevskiy/',7,1,'2022-12-20 23:03:00+08','https://lenta.ru/news/2022/12/20/mogilevskiy/','Замглавы российского психоневрологического интерната осудили за взятки на 12 лет'),
+	 ('https://lenta.ru/news/2022/12/20/searching/',9,1,'2022-12-20 23:03:00+08','https://lenta.ru/news/2022/12/20/searching/','Илон Маск начал искать нового главу Twitter'),
+	 ('https://lenta.ru/news/2022/12/20/mouse/',1,1,'2022-12-20 23:00:00+08','https://lenta.ru/news/2022/12/20/mouse/','Женщина обнаружила мышь в рождественской елке и попросила о помощи'),
+	 ('https://lenta.ru/news/2022/12/20/local/',5,1,'2022-12-20 22:59:00+08','https://lenta.ru/news/2022/12/20/local/','Возгорание на участке газопровода в Чувашии локализовано'),
+	 ('https://lenta.ru/news/2022/12/20/volkswagencovid/',9,1,'2022-12-20 22:57:27+08','https://lenta.ru/news/2022/12/20/volkswagencovid/','Volkswagen потребовал от сотрудников в Китае работать сверхурочно'),
+	 ('https://lenta.ru/news/2022/12/20/new_decease/',4,1,'2022-12-20 22:57:04+08','https://lenta.ru/news/2022/12/20/new_decease/','В Афганистане произошла вспышка неизвестного заболевания'),
+	 ('https://lenta.ru/news/2022/12/20/new_decease/',10,1,'2022-12-20 22:57:04+08','https://lenta.ru/news/2022/12/20/new_decease/','В Афганистане произошла вспышка неизвестного заболевания');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/roundpaints/',5,1,'2022-12-20 22:56:01+08','https://lenta.ru/news/2022/12/20/roundpaints/','В Казани пройдет выставка круглых картин'),
+	 ('https://lenta.ru/news/2022/12/20/gncrocg/',6,1,'2022-12-20 22:54:18+08','https://lenta.ru/news/2022/12/20/gncrocg/','В НАСА и «Роскосмосе» допустили утечку на «Союзе» через заводское отверстие'),
+	 ('https://lenta.ru/news/2022/12/20/nadoizuchit/',9,1,'2022-12-20 22:45:00+08','https://lenta.ru/news/2022/12/20/nadoizuchit/','Новак назвал условия для реакции России на потолок цен на газ в Европе'),
+	 ('https://lenta.ru/news/2022/12/20/gazzzd/',7,1,'2022-12-20 22:44:00+08','https://lenta.ru/news/2022/12/20/gazzzd/','Начато расследование после взрыва на газопроводе в Чувашии'),
+	 ('https://lenta.ru/news/2022/12/20/2millrdusa/',4,1,'2022-12-20 22:41:24+08','https://lenta.ru/news/2022/12/20/2millrdusa/','Украина получила два миллиарда долларов от США'),
+	 ('https://lenta.ru/news/2022/12/20/camerondaymon/',3,1,'2022-12-20 22:40:46+08','https://lenta.ru/news/2022/12/20/camerondaymon/','Кэмерон посоветовал Дэймону смириться с упущенным гонораром за роль в «Аватаре»'),
+	 ('https://lenta.ru/news/2022/12/20/haggi/',1,1,'2022-12-20 22:38:00+08','https://lenta.ru/news/2022/12/20/haggi/','В Роскачестве оценили влияние игрушек Хагги Вагги на психику и здоровье детей'),
+	 ('https://lenta.ru/news/2022/12/20/russiadopusk/',8,1,'2022-12-20 22:38:00+08','https://lenta.ru/news/2022/12/20/russiadopusk/','В Международной федерации настольного тенниса задумались о допуске россиян'),
+	 ('https://lenta.ru/news/2022/12/20/shtrafy_granicy/',5,1,'2022-12-20 22:38:00+08','https://lenta.ru/news/2022/12/20/shtrafy_granicy/','Госдума одобрила штрафы до миллиона рублей за карты с неверными границами России'),
+	 ('https://lenta.ru/news/2022/12/20/litva_drones/',4,1,'2022-12-20 22:37:14+08','https://lenta.ru/news/2022/12/20/litva_drones/','Литва станет первым покупателем американских дронов Switchblade 600');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/vzriv_gaz/',9,1,'2022-12-20 22:36:00+08','https://lenta.ru/news/2022/12/20/vzriv_gaz/','Влияние взрыва на российском газопроводе на цену газа оценили'),
+	 ('https://lenta.ru/news/2022/12/20/foster_reconstruction/',1,1,'2022-12-20 22:35:00+08','https://lenta.ru/news/2022/12/20/foster_reconstruction/','Звезда мировой архитектуры реконструирует Харьков'),
+	 ('https://lenta.ru/news/2022/12/20/chinamir/',4,1,'2022-12-20 22:34:00+08','https://lenta.ru/news/2022/12/20/chinamir/','Си Цзиньпин назвал бессмысленным затягивание украинского конфликта'),
+	 ('https://lenta.ru/news/2022/12/20/chinamir/',10,1,'2022-12-20 22:34:00+08','https://lenta.ru/news/2022/12/20/chinamir/','Си Цзиньпин назвал бессмысленным затягивание украинского конфликта'),
+	 ('https://lenta.ru/news/2022/12/20/thai/',1,1,'2022-12-20 22:32:00+08','https://lenta.ru/news/2022/12/20/thai/','В Таиланде автобус с туристами попал в ДТП'),
+	 ('https://lenta.ru/news/2022/12/20/c80tm/',6,1,'2022-12-20 22:28:00+08','https://lenta.ru/news/2022/12/20/c80tm/','Запуску российского «Прогресса» предрекли перенос'),
+	 ('https://lenta.ru/news/2022/12/20/wednesdaydance/',3,1,'2022-12-20 22:25:00+08','https://lenta.ru/news/2022/12/20/wednesdaydance/','Дженна Ортега не спала двое суток перед съемками вирусного танца Уэнсдэй'),
+	 ('https://lenta.ru/news/2022/12/20/sonnn/',5,1,'2022-12-20 22:20:00+08','https://lenta.ru/news/2022/12/20/sonnn/','Сын российского мэра захотел участвовать в СВО с целью «отмыться от этого говна»'),
+	 ('https://lenta.ru/news/2022/12/20/anonnns/',5,1,'2022-12-20 22:19:00+08','https://lenta.ru/news/2022/12/20/anonnns/','Анонсирован доклад Шойгу о ходе СВО'),
+	 ('https://lenta.ru/news/2022/12/20/gazchuvash/',9,1,'2022-12-20 22:19:00+08','https://lenta.ru/news/2022/12/20/gazchuvash/','Стало известно о транспортировке газа после взрыва газопровода в Чувашии');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/svvo/',5,1,'2022-12-20 22:18:00+08','https://lenta.ru/news/2022/12/20/svvo/','Депутат Госдумы сообщил о поездке Путина в зону СВО'),
+	 ('https://lenta.ru/news/2022/12/20/evreev_ne_puskaem/',4,1,'2022-12-20 22:16:00+08','https://lenta.ru/news/2022/12/20/evreev_ne_puskaem/','Ультраправые в Израиле ограничат право на репатриацию евреев по всему миру'),
+	 ('https://lenta.ru/news/2022/12/20/evreev_ne_puskaem/',10,1,'2022-12-20 22:16:00+08','https://lenta.ru/news/2022/12/20/evreev_ne_puskaem/','Ультраправые в Израиле ограничат право на репатриацию евреев по всему миру'),
+	 ('https://lenta.ru/news/2022/12/20/mold_telega_tiktok/',2,1,'2022-12-20 22:16:00+08','https://lenta.ru/news/2022/12/20/mold_telega_tiktok/','В Молдавии ограничат доступ к Telegram и TikTok'),
+	 ('https://lenta.ru/news/2022/12/20/putinminobr/',5,1,'2022-12-20 22:16:00+08','https://lenta.ru/news/2022/12/20/putinminobr/','Путин проведет расширенное заседание коллегии Минобороны России'),
+	 ('https://lenta.ru/news/2022/12/20/bitirlinovskiy/',5,1,'2022-12-20 22:11:00+08','https://lenta.ru/news/2022/12/20/bitirlinovskiy/','Тело 16-летнего подростка нашли под окнами российского дома-интерната'),
+	 ('https://lenta.ru/news/2022/12/20/gotovy/',9,1,'2022-12-20 22:11:00+08','https://lenta.ru/news/2022/12/20/gotovy/','Польша приготовилась отказаться от контрактов на поставки нефти из России'),
+	 ('https://lenta.ru/news/2022/12/20/photo/',1,1,'2022-12-20 22:11:00+08','https://lenta.ru/news/2022/12/20/photo/','Популярная пляжная страна начнет брать плату за фото с достопримечательностями'),
+	 ('https://lenta.ru/news/2022/12/20/ubiistvoauto/',7,1,'2022-12-20 22:04:00+08','https://lenta.ru/news/2022/12/20/ubiistvoauto/','Покупатель убил кувалдой россиянина во время подписания договора о продаже авто'),
+	 ('https://lenta.ru/news/2022/12/20/replacement/',4,1,'2022-12-20 21:59:35+08','https://lenta.ru/news/2022/12/20/replacement/','Экс-разведчик США заявил о плане Вашингтона сменить власть на Украине');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/replacement/',10,1,'2022-12-20 21:59:35+08','https://lenta.ru/news/2022/12/20/replacement/','Экс-разведчик США заявил о плане Вашингтона сменить власть на Украине'),
+	 ('https://lenta.ru/news/2022/12/20/uprost/',4,1,'2022-12-20 21:57:32+08','https://lenta.ru/news/2022/12/20/uprost/','Швеция упростила доступ ЕС и НАТО на территорию страны'),
+	 ('https://lenta.ru/news/2022/12/20/uprost/',10,1,'2022-12-20 21:57:32+08','https://lenta.ru/news/2022/12/20/uprost/','Швеция упростила доступ ЕС и НАТО на территорию страны'),
+	 ('https://lenta.ru/news/2022/12/20/pod_saa/',4,1,'2022-12-20 21:57:12+08','https://lenta.ru/news/2022/12/20/pod_saa/','Украина заявила о готовности принять Саакашвили'),
+	 ('https://lenta.ru/news/2022/12/20/pricegasbgan/',9,1,'2022-12-20 21:57:00+08','https://lenta.ru/news/2022/12/20/pricegasbgan/','Названы риски введения потолка цен на газ для европейского рынка'),
+	 ('https://lenta.ru/news/2022/12/20/mbr/',6,1,'2022-12-20 21:54:37+08','https://lenta.ru/news/2022/12/20/mbr/','Названо преимущество российского «Авангарда»'),
+	 ('https://lenta.ru/news/2022/12/20/south_korea/',1,1,'2022-12-20 21:51:19+08','https://lenta.ru/news/2022/12/20/south_korea/','Популярная страна Азии решила запустить новые типы виз для россиян'),
+	 ('https://lenta.ru/news/2022/12/20/coovalda/',4,1,'2022-12-20 21:50:00+08','https://lenta.ru/news/2022/12/20/coovalda/','В Москве закидали посольство Финляндии кувалдами'),
+	 ('https://lenta.ru/news/2022/12/20/coovalda/',10,1,'2022-12-20 21:50:00+08','https://lenta.ru/news/2022/12/20/coovalda/','В Москве закидали посольство Финляндии кувалдами'),
+	 ('https://lenta.ru/news/2022/12/20/flu/',1,1,'2022-12-20 21:46:18+08','https://lenta.ru/news/2022/12/20/flu/','Врач назвал главную ошибку заразившихся гриппом россиян');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/saak_georgia/',4,1,'2022-12-20 21:45:00+08','https://lenta.ru/news/2022/12/20/saak_georgia/','В Грузии обвинили Украину в попытке вовлечь страну в войну с помощью Саакашвили'),
+	 ('https://lenta.ru/news/2022/12/20/sizz/',7,1,'2022-12-20 21:41:00+08','https://lenta.ru/news/2022/12/20/sizz/','Убившего двух женщин и расчленившего мужчину 20 лет назад россиянина задержали'),
+	 ('https://lenta.ru/news/2022/12/20/spisokss/',5,1,'2022-12-20 21:41:00+08','https://lenta.ru/news/2022/12/20/spisokss/','Опубликован список погибших при взрыве на газопроводе в Чувашии'),
+	 ('https://lenta.ru/news/2022/12/20/notrainingshere/',4,1,'2022-12-20 21:37:00+08','https://lenta.ru/news/2022/12/20/notrainingshere/','Хорватия отказалась считать Украину союзником'),
+	 ('https://lenta.ru/news/2022/12/20/notrainingshere/',10,1,'2022-12-20 21:37:00+08','https://lenta.ru/news/2022/12/20/notrainingshere/','Хорватия отказалась считать Украину союзником'),
+	 ('https://lenta.ru/news/2022/12/20/prdprd/',1,1,'2022-12-20 21:37:00+08','https://lenta.ru/news/2022/12/20/prdprd/','Россиян предупредили о вреде фейерверков'),
+	 ('https://lenta.ru/news/2022/12/20/newzeland/',8,1,'2022-12-20 21:33:00+08','https://lenta.ru/news/2022/12/20/newzeland/','Новозеландский хоккеист утонул во время занятий серфингом'),
+	 ('https://lenta.ru/news/2022/12/20/poland_sovet/',4,1,'2022-12-20 21:33:00+08','https://lenta.ru/news/2022/12/20/poland_sovet/','Польша попросила Совет Европы о помощи в получении репараций от Германии'),
+	 ('https://lenta.ru/news/2022/12/20/poland_sovet/',10,1,'2022-12-20 21:33:00+08','https://lenta.ru/news/2022/12/20/poland_sovet/','Польша попросила Совет Европы о помощи в получении репараций от Германии'),
+	 ('https://lenta.ru/news/2022/12/20/chinesecrematoriesintrouble/',4,1,'2022-12-20 21:32:00+08','https://lenta.ru/news/2022/12/20/chinesecrematoriesintrouble/','Крематории Китая оказались переполнены из-за эпидемии COVID-19');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/chinesecrematoriesintrouble/',10,1,'2022-12-20 21:32:00+08','https://lenta.ru/news/2022/12/20/chinesecrematoriesintrouble/','Крематории Китая оказались переполнены из-за эпидемии COVID-19'),
+	 ('https://lenta.ru/news/2022/12/20/duffy/',3,1,'2022-12-20 21:32:00+08','https://lenta.ru/news/2022/12/20/duffy/','Умер клавишник Primal Scream Мартин Даффи'),
+	 ('https://lenta.ru/news/2022/12/20/kitai/',9,1,'2022-12-20 21:30:00+08','https://lenta.ru/news/2022/12/20/kitai/','Дефицит бюджета Китая достиг рекорда'),
+	 ('https://lenta.ru/news/2022/12/20/nccg/',6,1,'2022-12-20 21:30:00+08','https://lenta.ru/news/2022/12/20/nccg/','Rocket Lab перенесла первый пуск Electron из Вирджинии на январь'),
+	 ('https://lenta.ru/news/2022/12/20/vsuu/',5,1,'2022-12-20 21:27:00+08','https://lenta.ru/news/2022/12/20/vsuu/','Беспилотник ВСУ атаковал энергообъект в российском приграничном регионе'),
+	 ('https://lenta.ru/news/2022/12/20/turkey_russians/',1,1,'2022-12-20 21:25:00+08','https://lenta.ru/news/2022/12/20/turkey_russians/','Российские туристы заблудились в горах Турции'),
+	 ('https://lenta.ru/news/2022/12/20/rogovzaporozh/',5,1,'2022-12-20 21:21:00+08','https://lenta.ru/news/2022/12/20/rogovzaporozh/','Украинские спецслужбы уличили в рассылке угроз российским военным'),
+	 ('https://lenta.ru/news/2022/12/20/alekseevaa/',5,1,'2022-12-20 21:20:00+08','https://lenta.ru/news/2022/12/20/alekseevaa/','Старейшую в России правозащитную организацию захотели ликвидировать через суд'),
+	 ('https://lenta.ru/news/2022/12/20/grandeloukr/',4,1,'2022-12-20 21:18:00+08','https://lenta.ru/news/2022/12/20/grandeloukr/','На Украине возбудили дело о взрыве подарка коменданту полиции Польши'),
+	 ('https://lenta.ru/news/2022/12/20/giftedgrenadelauncher/',4,1,'2022-12-20 21:13:00+08','https://lenta.ru/news/2022/12/20/giftedgrenadelauncher/','Украинец ответил за подаренный польской полиции гранатомет');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/giftedgrenadelauncher/',10,1,'2022-12-20 21:13:00+08','https://lenta.ru/news/2022/12/20/giftedgrenadelauncher/','Украинец ответил за подаренный польской полиции гранатомет'),
+	 ('https://lenta.ru/news/2022/12/20/alcorating/',5,1,'2022-12-20 21:10:00+08','https://lenta.ru/news/2022/12/20/alcorating/','Названы самые пьющие регионы России'),
+	 ('https://lenta.ru/news/2022/12/20/weasley/',1,1,'2022-12-20 21:10:00+08','https://lenta.ru/news/2022/12/20/weasley/','В российском городе продадут «дом Уизли»'),
+	 ('https://lenta.ru/news/2022/12/20/model/',1,1,'2022-12-20 21:04:00+08','https://lenta.ru/news/2022/12/20/model/','Модель пожертвовала печень больному племяннику и изменилась до неузнаваемости'),
+	 ('https://lenta.ru/news/2022/12/20/argentina/',8,1,'2022-12-20 21:03:00+08','https://lenta.ru/news/2022/12/20/argentina/','Аргентинский фанат погиб во время празднования победы сборной на ЧМ'),
+	 ('https://lenta.ru/news/2022/12/20/samovolka/',4,1,'2022-12-20 21:03:00+08','https://lenta.ru/news/2022/12/20/samovolka/','Главком ВСУ назвал причину роста потерь среди личного состава'),
+	 ('https://lenta.ru/news/2022/12/20/nargiz_depart/',3,1,'2022-12-20 20:56:01+08','https://lenta.ru/news/2022/12/20/nargiz_depart/','Певица Наргиз впервые рассказала о депортации из России'),
+	 ('https://lenta.ru/news/2022/12/20/svalki/',5,1,'2022-12-20 20:56:00+08','https://lenta.ru/news/2022/12/20/svalki/','В Новосибирской области ликвидируют две крупные свалки'),
+	 ('https://lenta.ru/news/2022/12/20/nwgc/',6,1,'2022-12-20 20:48:41+08','https://lenta.ru/news/2022/12/20/nwgc/','Первый южнокорейский аппарат вышел на окололунную орбиту'),
+	 ('https://lenta.ru/news/2022/12/20/sred/',9,1,'2022-12-20 20:46:26+08','https://lenta.ru/news/2022/12/20/sred/','Названа средняя годовая зарплата в Европе');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/iran_usa/',4,1,'2022-12-20 20:39:00+08','https://lenta.ru/news/2022/12/20/iran_usa/','Иран обвинил США в использовании афганских террористов как инструмент влияния'),
+	 ('https://lenta.ru/news/2022/12/20/iran_usa/',10,1,'2022-12-20 20:39:00+08','https://lenta.ru/news/2022/12/20/iran_usa/','Иран обвинил США в использовании афганских террористов как инструмент влияния'),
+	 ('https://lenta.ru/news/2022/12/20/srbia_kosovo/',4,1,'2022-12-20 20:39:00+08','https://lenta.ru/news/2022/12/20/srbia_kosovo/','Сербия призвала мир отреагировать на угрозы Косово'),
+	 ('https://lenta.ru/news/2022/12/20/srbia_kosovo/',10,1,'2022-12-20 20:39:00+08','https://lenta.ru/news/2022/12/20/srbia_kosovo/','Сербия призвала мир отреагировать на угрозы Косово'),
+	 ('https://lenta.ru/news/2022/12/20/kokos/',1,1,'2022-12-20 20:29:00+08','https://lenta.ru/news/2022/12/20/kokos/','Стоматолог развеял популярный в сети миф об отбеливании зубов'),
+	 ('https://lenta.ru/news/2022/12/20/record_ipoteka/',1,1,'2022-12-20 20:29:00+08','https://lenta.ru/news/2022/12/20/record_ipoteka/','Ипотеке в России спрогнозировали рекорд'),
+	 ('https://lenta.ru/news/2022/12/20/shevshuksud/',3,1,'2022-12-20 20:28:00+08','https://lenta.ru/news/2022/12/20/shevshuksud/','Лидер ДДТ Шевчук прокомментировал решение суда по делу о дискредитации ВС России'),
+	 ('https://lenta.ru/news/2022/12/20/kadry/',5,1,'2022-12-20 20:26:00+08','https://lenta.ru/news/2022/12/20/kadry/','Глава приграничного российского региона показал последствия обстрела из HIMARS'),
+	 ('https://lenta.ru/news/2022/12/20/sokrat/',9,1,'2022-12-20 20:26:00+08','https://lenta.ru/news/2022/12/20/sokrat/','Одна европейская страна резко сократила зависимость от российского газа'),
+	 ('https://lenta.ru/news/2022/12/20/cheloveka/',5,1,'2022-12-20 20:23:00+08','https://lenta.ru/news/2022/12/20/cheloveka/','Стало известно о погибших при взрыве газопровода в Чувашии');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/gazoprovod/',5,1,'2022-12-20 20:22:00+08','https://lenta.ru/news/2022/12/20/gazoprovod/','Взорвавшийся в российском регионе газопровод качал газ в Европу через Украину'),
+	 ('https://lenta.ru/news/2022/12/20/ove_capitals/',8,1,'2022-12-20 20:21:00+08','https://lenta.ru/news/2022/12/20/ove_capitals/','Тренер «Вашингтона» высказался о желании Овечкина догнать Хоу в гонке снайперов'),
+	 ('https://lenta.ru/news/2022/12/20/usacongresscombatsrussianmedia/',4,1,'2022-12-20 20:21:00+08','https://lenta.ru/news/2022/12/20/usacongresscombatsrussianmedia/','Конгресс США выделит часть из 884 миллионов долларов на борьбу с российскими СМИ'),
+	 ('https://lenta.ru/news/2022/12/20/usacongresscombatsrussianmedia/',10,1,'2022-12-20 20:21:00+08','https://lenta.ru/news/2022/12/20/usacongresscombatsrussianmedia/','Конгресс США выделит часть из 884 миллионов долларов на борьбу с российскими СМИ'),
+	 ('https://lenta.ru/news/2022/12/20/vsstn/',4,1,'2022-12-20 20:21:00+08','https://lenta.ru/news/2022/12/20/vsstn/','Назван возможный срок восстановления энергосистемы Киева'),
+	 ('https://lenta.ru/news/2022/12/20/gazup/',9,1,'2022-12-20 20:19:00+08','https://lenta.ru/news/2022/12/20/gazup/','Цена газа в Европе подскочила после взрыва на российском газопроводе'),
+	 ('https://lenta.ru/news/2022/12/20/nikitchenko/',7,1,'2022-12-20 20:18:00+08','https://lenta.ru/news/2022/12/20/nikitchenko/','Занимавшийся делом о стрельбе в российской школе следователь уволился'),
+	 ('https://lenta.ru/news/2022/12/20/smrtpahones/',6,1,'2022-12-20 20:17:00+08','https://lenta.ru/news/2022/12/20/smrtpahones/','Названы самые популярные смартфоны в России'),
+	 ('https://lenta.ru/news/2022/12/20/gubernator/',5,1,'2022-12-20 20:16:00+08','https://lenta.ru/news/2022/12/20/gubernator/','Глава Чувашии раскрыл подробности взрыва на газопроводе'),
+	 ('https://lenta.ru/news/2022/12/20/karta/',5,1,'2022-12-20 20:16:00+08','https://lenta.ru/news/2022/12/20/karta/','Опубликована карта боевых действий на Украине');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/vlad/',7,1,'2022-12-20 20:10:00+08','https://lenta.ru/news/2022/12/20/vlad/','Двух россиян обвинили в убийстве обидчика отца в больнице'),
+	 ('https://lenta.ru/news/2022/12/20/work/',1,1,'2022-12-20 20:10:00+08','https://lenta.ru/news/2022/12/20/work/','Названы любимые места россиян для совмещения работы и отдыха'),
+	 ('https://lenta.ru/news/2022/12/20/afroman_president/',3,1,'2022-12-20 20:08:00+08','https://lenta.ru/news/2022/12/20/afroman_president/','Рэпер Афромен заявил о намерении баллотироваться в президенты США'),
+	 ('https://lenta.ru/news/2022/12/20/postradall/',5,1,'2022-12-20 20:04:00+08','https://lenta.ru/news/2022/12/20/postradall/','Стало известно о пострадавшем в результате пожара на российском газопроводе'),
+	 ('https://lenta.ru/news/2022/12/20/2023/',5,1,'2022-12-20 20:03:31+08','https://lenta.ru/news/2022/12/20/2023/','В Крыму высказались о судьбе трех городов Украины в 2023 году'),
+	 ('https://lenta.ru/news/2022/12/20/ekat/',5,1,'2022-12-20 19:59:13+08','https://lenta.ru/news/2022/12/20/ekat/','На Урале восстановят столетний дом русского врача'),
+	 ('https://lenta.ru/news/2022/12/20/kozl/',1,1,'2022-12-20 19:48:00+08','https://lenta.ru/news/2022/12/20/kozl/','Данилу Козловского обязали выплатить сотни тысяч рублей за элитную квартиру'),
+	 ('https://lenta.ru/news/2022/12/20/huan_guaido/',4,1,'2022-12-20 19:46:00+08','https://lenta.ru/news/2022/12/20/huan_guaido/','В Венесуэле решили свергнуть лидера оппозиции Гуайдо'),
+	 ('https://lenta.ru/news/2022/12/20/huan_guaido/',10,1,'2022-12-20 19:46:00+08','https://lenta.ru/news/2022/12/20/huan_guaido/','В Венесуэле решили свергнуть лидера оппозиции Гуайдо'),
+	 ('https://lenta.ru/news/2022/12/20/berb_welt/',4,1,'2022-12-20 19:45:00+08','https://lenta.ru/news/2022/12/20/berb_welt/','В сети раскритиковали слова главы МИД ФРГ об отказе прекратить огонь на Украине');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/berb_welt/',10,1,'2022-12-20 19:45:00+08','https://lenta.ru/news/2022/12/20/berb_welt/','В сети раскритиковали слова главы МИД ФРГ об отказе прекратить огонь на Украине'),
+	 ('https://lenta.ru/news/2022/12/20/avia_vsu/',5,1,'2022-12-20 19:44:00+08','https://lenta.ru/news/2022/12/20/avia_vsu/','Минобороны объявило об уничтожении нескольких единиц авиации ВСУ российскими ПВО'),
+	 ('https://lenta.ru/news/2022/12/20/dolph/',6,1,'2022-12-20 19:43:00+08','https://lenta.ru/news/2022/12/20/dolph/','У выброшенных на берег дельфинов обнаружили деменцию'),
+	 ('https://lenta.ru/news/2022/12/20/sbytyy/',5,1,'2022-12-20 19:43:00+08','https://lenta.ru/news/2022/12/20/sbytyy/','Российские ВКС сбили два украинских МиГ-29 в ДНР'),
+	 ('https://lenta.ru/news/2022/12/20/sklad/',5,1,'2022-12-20 19:43:00+08','https://lenta.ru/news/2022/12/20/sklad/','Минобороны заявило о поражении склада боеприпасов ВСУ'),
+	 ('https://lenta.ru/news/2022/12/20/gazsokr/',9,1,'2022-12-20 19:42:00+08','https://lenta.ru/news/2022/12/20/gazsokr/','В Европе отчитались о сокращении потребления газа'),
+	 ('https://lenta.ru/news/2022/12/20/minobr/',5,1,'2022-12-20 19:42:00+08','https://lenta.ru/news/2022/12/20/minobr/','Минобороны заявило об уничтожении до 30 бойцов ВСУ в Харьковской области'),
+	 ('https://lenta.ru/news/2022/12/20/miinn/',5,1,'2022-12-20 19:41:00+08','https://lenta.ru/news/2022/12/20/miinn/','Минобороны рассказало о поражении ВСУ на краснолиманском направлении'),
+	 ('https://lenta.ru/news/2022/12/20/nastuplenie/',5,1,'2022-12-20 19:39:00+08','https://lenta.ru/news/2022/12/20/nastuplenie/','Российские войска продолжили наступление на донецком направлении'),
+	 ('https://lenta.ru/news/2022/12/20/kiev_80/',4,1,'2022-12-20 19:38:00+08','https://lenta.ru/news/2022/12/20/kiev_80/','В Киевской области 80 процентов потребителей остались без электричества');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/poteryali/',9,1,'2022-12-20 19:38:00+08','https://lenta.ru/news/2022/12/20/poteryali/','Названы потери зарубежных IT-компаний от ухода из России'),
+	 ('https://lenta.ru/news/2022/12/20/tess/',7,1,'2022-12-20 19:30:00+08','https://lenta.ru/news/2022/12/20/tess/','Тесака решили посмертно судить за двойное убийство отдельно от сообщников'),
+	 ('https://lenta.ru/news/2022/12/20/usa_eu/',9,1,'2022-12-20 19:29:00+08','https://lenta.ru/news/2022/12/20/usa_eu/','Последствия экономических разногласий США и ЕС оценили'),
+	 ('https://lenta.ru/news/2022/12/20/polyakpogib/',4,1,'2022-12-20 19:28:00+08','https://lenta.ru/news/2022/12/20/polyakpogib/','На Украине погиб польский наемник'),
+	 ('https://lenta.ru/news/2022/12/20/trevogaa4/',4,1,'2022-12-20 19:27:00+08','https://lenta.ru/news/2022/12/20/trevogaa4/','На Украине объявили воздушную тревогу в четырех областях'),
+	 ('https://lenta.ru/news/2022/12/20/pozhar/',5,1,'2022-12-20 19:23:00+08','https://lenta.ru/news/2022/12/20/pozhar/','Мощный пожар на российском газопроводе сняли на видео'),
+	 ('https://lenta.ru/news/2022/12/20/wiki_analog/',2,1,'2022-12-20 19:23:00+08','https://lenta.ru/news/2022/12/20/wiki_analog/','В Минцифры анонсировали запуск российского аналога «Википедии»'),
+	 ('https://lenta.ru/news/2022/12/20/poltavavzryv/',4,1,'2022-12-20 19:22:00+08','https://lenta.ru/news/2022/12/20/poltavavzryv/','В Полтаве и Харькове произошли взрывы'),
+	 ('https://lenta.ru/news/2022/12/20/lyusya_dubai/',1,1,'2022-12-20 19:19:00+08','https://lenta.ru/news/2022/12/20/lyusya_dubai/','Люся Чеботина рассказала о покупке квартиры в Дубае'),
+	 ('https://lenta.ru/news/2022/12/20/defenergy/',4,1,'2022-12-20 19:18:00+08','https://lenta.ru/news/2022/12/20/defenergy/','На Украине заявили о значительном дефиците мощности в энергетике');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/preparat/',2,1,'2022-12-20 19:17:00+08','https://lenta.ru/news/2022/12/20/preparat/','Доктор Мясников назвал опасное последствие приема популярной группы препаратов'),
+	 ('https://lenta.ru/news/2022/12/20/hyundai/',9,1,'2022-12-20 19:15:00+08','https://lenta.ru/news/2022/12/20/hyundai/','Сотрудникам российского завода Hyundai объявили о грядущем сокращении'),
+	 ('https://lenta.ru/news/2022/12/20/spaceship/',6,1,'2022-12-20 19:15:00+08','https://lenta.ru/news/2022/12/20/spaceship/','Физики предложили искать инопланетян с помощью гравитационных волн'),
+	 ('https://lenta.ru/news/2022/12/20/lawrence/',3,1,'2022-12-20 19:13:18+08','https://lenta.ru/news/2022/12/20/lawrence/','Дженнифер Лоуренс обвинила мужчин-режиссеров в токсичности и эмоциональности'),
+	 ('https://lenta.ru/news/2022/12/20/infantino/',8,1,'2022-12-20 19:11:05+08','https://lenta.ru/news/2022/12/20/infantino/','Глава ФИФА предложил проводить чемпионаты мира чаще'),
+	 ('https://lenta.ru/news/2022/12/20/italianministersignaling/',4,1,'2022-12-20 19:04:00+08','https://lenta.ru/news/2022/12/20/italianministersignaling/','В Италии назвали потолок цен на газ из России политическим сигналом для Москвы'),
+	 ('https://lenta.ru/news/2022/12/20/italianministersignaling/',10,1,'2022-12-20 19:04:00+08','https://lenta.ru/news/2022/12/20/italianministersignaling/','В Италии назвали потолок цен на газ из России политическим сигналом для Москвы'),
+	 ('https://lenta.ru/news/2022/12/20/shardga/',1,1,'2022-12-20 19:04:00+08','https://lenta.ru/news/2022/12/20/shardga/','Россиянам раскрыли способ выгодно отдохнуть в ОАЭ'),
+	 ('https://lenta.ru/news/2022/12/20/india_mid_china/',4,1,'2022-12-20 19:01:00+08','https://lenta.ru/news/2022/12/20/india_mid_china/','В Индии заявили о развертывании рекордного числа сил на границе с Китаем'),
+	 ('https://lenta.ru/news/2022/12/20/india_mid_china/',10,1,'2022-12-20 19:01:00+08','https://lenta.ru/news/2022/12/20/india_mid_china/','В Индии заявили о развертывании рекордного числа сил на границе с Китаем');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/19/driving_dog/',1,1,'2022-12-20 19:00:00+08','https://lenta.ru/news/2022/12/19/driving_dog/','Собака прыгнула за руль джипа и врезалась в соседский автомобиль'),
+	 ('https://lenta.ru/news/2022/12/20/bestofthebest/',3,1,'2022-12-20 18:58:00+08','https://lenta.ru/news/2022/12/20/bestofthebest/','Известные режиссеры назвали любимые фильмы года'),
+	 ('https://lenta.ru/news/2022/12/20/us_nuclear_billions/',4,1,'2022-12-20 18:56:00+08','https://lenta.ru/news/2022/12/20/us_nuclear_billions/','США захотели выделить миллиарды долларов на ядерный арсенал'),
+	 ('https://lenta.ru/news/2022/12/20/us_nuclear_billions/',10,1,'2022-12-20 18:56:00+08','https://lenta.ru/news/2022/12/20/us_nuclear_billions/','США захотели выделить миллиарды долларов на ядерный арсенал'),
+	 ('https://lenta.ru/news/2022/12/20/vniz/',9,1,'2022-12-20 18:53:00+08','https://lenta.ru/news/2022/12/20/vniz/','Минсельхоз предсказал стабильную ценовую ситуацию на продовольственном рынке'),
+	 ('https://lenta.ru/news/2022/12/20/chipshortage/',9,1,'2022-12-20 18:52:13+08','https://lenta.ru/news/2022/12/20/chipshortage/','Назван срок завершения глобальной проблемы'),
+	 ('https://lenta.ru/news/2022/12/20/balitskiy_/',5,1,'2022-12-20 18:52:00+08','https://lenta.ru/news/2022/12/20/balitskiy_/','В Запорожской области назначили сенатора Совфеда от региона'),
+	 ('https://lenta.ru/news/2022/12/20/million/',6,1,'2022-12-20 18:49:16+08','https://lenta.ru/news/2022/12/20/million/','Число абонентов Starlink превысило миллион'),
+	 ('https://lenta.ru/news/2022/12/20/zelenskypriehal/',4,1,'2022-12-20 18:49:00+08','https://lenta.ru/news/2022/12/20/zelenskypriehal/','Зеленский приехал в Артемовск'),
+	 ('https://lenta.ru/news/2022/12/20/suveren/',5,1,'2022-12-20 18:44:00+08','https://lenta.ru/news/2022/12/20/suveren/','Путин заявил об отстаивании Россией суверенитета');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/putin/',5,1,'2022-12-20 18:42:00+08','https://lenta.ru/news/2022/12/20/putin/','Путин оценил действия российских военных в ходе СВО'),
+	 ('https://lenta.ru/news/2022/12/20/brateevo/',5,1,'2022-12-20 18:41:00+08','https://lenta.ru/news/2022/12/20/brateevo/','Массовое ДТП произошло на Братеевском мосту в Москве'),
+	 ('https://lenta.ru/news/2022/12/20/acne_lech/',1,1,'2022-12-20 18:37:00+08','https://lenta.ru/news/2022/12/20/acne_lech/','Врач назвала эффективные методы лечения уродующей лицо болезни'),
+	 ('https://lenta.ru/news/2022/12/20/tsar_arest/',4,1,'2022-12-20 18:36:00+08','https://lenta.ru/news/2022/12/20/tsar_arest/','В ЦАР задержали сотрудников DHL по делу о покушении на главу Русского дома'),
+	 ('https://lenta.ru/news/2022/12/20/tsar_arest/',10,1,'2022-12-20 18:36:00+08','https://lenta.ru/news/2022/12/20/tsar_arest/','В ЦАР задержали сотрудников DHL по делу о покушении на главу Русского дома'),
+	 ('https://lenta.ru/news/2022/12/20/arkhyz/',5,1,'2022-12-20 18:35:56+08','https://lenta.ru/news/2022/12/20/arkhyz/','Стало известно о двукратном росте спроса на проживание в отелях Архыза'),
+	 ('https://lenta.ru/news/2022/12/20/alauu/',5,1,'2022-12-20 18:35:00+08','https://lenta.ru/news/2022/12/20/alauu/','Командир «Ахмата» рассказал об отказе ВСУ идти в атаку'),
+	 ('https://lenta.ru/news/2022/12/20/chelyabinss/',5,1,'2022-12-20 18:34:00+08','https://lenta.ru/news/2022/12/20/chelyabinss/','Годовалый российский ребенок умер от ОРВИ после отказа от госпитализации'),
+	 ('https://lenta.ru/news/2022/12/20/rabmob/',5,1,'2022-12-20 18:34:00+08','https://lenta.ru/news/2022/12/20/rabmob/','Минобороны показало работу мобилизованных в зоне спецоперации'),
+	 ('https://lenta.ru/news/2022/12/20/cbblockmosh/',9,1,'2022-12-20 18:33:00+08','https://lenta.ru/news/2022/12/20/cbblockmosh/','В России заблокировали рекордное число мошенников');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/espcharm/',4,1,'2022-12-20 18:32:00+08','https://lenta.ru/news/2022/12/20/espcharm/','Азербайджан пожаловался в ЕСПЧ на Армению'),
+	 ('https://lenta.ru/news/2022/12/20/krchk/',5,1,'2022-12-20 18:32:00+08','https://lenta.ru/news/2022/12/20/krchk/','Иммунолог высказался об особенностях свиного гриппа в России'),
+	 ('https://lenta.ru/news/2022/12/20/pozharkiev/',4,1,'2022-12-20 18:32:00+08','https://lenta.ru/news/2022/12/20/pozharkiev/','Стало известно о сильном пожаре в Киеве'),
+	 ('https://lenta.ru/news/2022/12/20/dtp/',7,1,'2022-12-20 18:30:00+08','https://lenta.ru/news/2022/12/20/dtp/','Участник знаменитой перестрелки в центре Москвы погиб в ДТП на российской трассе'),
+	 ('https://lenta.ru/news/2022/12/20/bel_svo/',4,1,'2022-12-20 18:29:00+08','https://lenta.ru/news/2022/12/20/bel_svo/','Названы причины нежелания Белоруссии участвовать в спецоперации на Украине'),
+	 ('https://lenta.ru/news/2022/12/20/40proc/',9,1,'2022-12-20 18:27:00+08','https://lenta.ru/news/2022/12/20/40proc/','Почти половина россиян заявили о положительном отношении к криптовалюте'),
+	 ('https://lenta.ru/news/2022/12/20/minobrnauki/',5,1,'2022-12-20 18:25:00+08','https://lenta.ru/news/2022/12/20/minobrnauki/','В Минобрнауки назвали нецелесообразным полный возврат к специалитету'),
+	 ('https://lenta.ru/news/2022/12/20/tsar_interpol/',4,1,'2022-12-20 18:25:00+08','https://lenta.ru/news/2022/12/20/tsar_interpol/','Полиция ЦАР привлечет Интерпол для расследования атаки на главу Русского дома'),
+	 ('https://lenta.ru/news/2022/12/20/tsar_interpol/',10,1,'2022-12-20 18:25:00+08','https://lenta.ru/news/2022/12/20/tsar_interpol/','Полиция ЦАР привлечет Интерпол для расследования атаки на главу Русского дома'),
+	 ('https://lenta.ru/news/2022/12/20/borisova/',1,1,'2022-12-20 18:22:00+08','https://lenta.ru/news/2022/12/20/borisova/','Скандальная телеведущая получила выговор за непристойное поведение в Таиланде');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/hunter/',6,1,'2022-12-20 18:22:00+08','https://lenta.ru/news/2022/12/20/hunter/','В России рассказали о технологиях следующего поколения в БПЛА «Охотник»'),
+	 ('https://lenta.ru/news/2022/12/20/mincifry/',2,1,'2022-12-20 18:21:00+08','https://lenta.ru/news/2022/12/20/mincifry/','Минцифры высказалось о запрете на удаленку для покинувших Россию IT-специалистов'),
+	 ('https://lenta.ru/news/2022/12/20/it/',9,1,'2022-12-20 18:20:00+08','https://lenta.ru/news/2022/12/20/it/','Глава Минцифры назвал долю уехавших из России с февраля айтишников'),
+	 ('https://lenta.ru/news/2022/12/20/frg_justice/',4,1,'2022-12-20 18:18:00+08','https://lenta.ru/news/2022/12/20/frg_justice/','Суд ФРГ признал виновной 97-летнюю бывшую нацистку'),
+	 ('https://lenta.ru/news/2022/12/20/frg_justice/',10,1,'2022-12-20 18:18:00+08','https://lenta.ru/news/2022/12/20/frg_justice/','Суд ФРГ признал виновной 97-летнюю бывшую нацистку'),
+	 ('https://lenta.ru/news/2022/12/20/rost_zabolevaemosti/',5,1,'2022-12-20 18:17:00+08','https://lenta.ru/news/2022/12/20/rost_zabolevaemosti/','В Роспотребнадзоре сравнили рост заболеваемости ОРВИ и COVID-19 в Петербурге'),
+	 ('https://lenta.ru/news/2022/12/20/sluzbaa/',5,1,'2022-12-20 18:16:00+08','https://lenta.ru/news/2022/12/20/sluzbaa/','В Москве втрое выросло число обращений по теме альтернативной гражданской службы'),
+	 ('https://lenta.ru/news/2022/12/20/messiontop/',8,1,'2022-12-20 18:15:00+08','https://lenta.ru/news/2022/12/20/messiontop/','Пост Месси о победе на чемпионате мира собрал рекордное количество лайков'),
+	 ('https://lenta.ru/news/2022/12/20/arenda_prosche/',1,1,'2022-12-20 18:13:00+08','https://lenta.ru/news/2022/12/20/arenda_prosche/','В Москве стало проще снять жилье'),
+	 ('https://lenta.ru/news/2022/12/20/iran_extradition/',4,1,'2022-12-20 18:12:00+08','https://lenta.ru/news/2022/12/20/iran_extradition/','Из России в Иран экстрадируют шесть заключенных');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/iran_extradition/',10,1,'2022-12-20 18:12:00+08','https://lenta.ru/news/2022/12/20/iran_extradition/','Из России в Иран экстрадируют шесть заключенных'),
+	 ('https://lenta.ru/news/2022/12/20/hungaryurgestoinvestigate/',4,1,'2022-12-20 18:08:00+08','https://lenta.ru/news/2022/12/20/hungaryurgestoinvestigate/','Венгрия призвала Еврокомиссию расследовать последствия антироссийских санкций'),
+	 ('https://lenta.ru/news/2022/12/20/hungaryurgestoinvestigate/',10,1,'2022-12-20 18:08:00+08','https://lenta.ru/news/2022/12/20/hungaryurgestoinvestigate/','Венгрия призвала Еврокомиссию расследовать последствия антироссийских санкций'),
+	 ('https://lenta.ru/news/2022/12/20/hod/',3,1,'2022-12-20 18:07:26+08','https://lenta.ru/news/2022/12/20/hod/','Звезда «Дома Дракона» рассказала о самой сложной сцене в сериале'),
+	 ('https://lenta.ru/news/2022/12/20/zahvatplennih/',5,1,'2022-12-20 18:03:00+08','https://lenta.ru/news/2022/12/20/zahvatplennih/','Расстрелявших российских военных бойцов ВСУ захватили в плен'),
+	 ('https://lenta.ru/news/2022/12/20/alkogoliki_deti/',5,1,'2022-12-20 18:02:00+08','https://lenta.ru/news/2022/12/20/alkogoliki_deti/','Стала известна доля смертности среди детей из-за родителей-алкоголиков'),
+	 ('https://lenta.ru/news/2022/12/20/kndr_usa/',4,1,'2022-12-20 18:01:00+08','https://lenta.ru/news/2022/12/20/kndr_usa/','Военный потенциал Северной Кореи оценили'),
+	 ('https://lenta.ru/news/2022/12/20/kndr_usa/',10,1,'2022-12-20 18:01:00+08','https://lenta.ru/news/2022/12/20/kndr_usa/','Военный потенциал Северной Кореи оценили'),
+	 ('https://lenta.ru/news/2022/12/20/galaxys23/',6,1,'2022-12-20 18:00:00+08','https://lenta.ru/news/2022/12/20/galaxys23/','Выпуск нового флагмана Samsung сорвали'),
+	 ('https://lenta.ru/news/2022/12/20/sbuharkovflag/',4,1,'2022-12-20 17:56:00+08','https://lenta.ru/news/2022/12/20/sbuharkovflag/','На Украине задержали поднявшего флаг России над мэрией Харькова мужчину');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/kaleidoscop/',5,1,'2022-12-20 17:55:41+08','https://lenta.ru/news/2022/12/20/kaleidoscop/','В Тюмени открылась посвященная 100-летию образования СССР выставка'),
+	 ('https://lenta.ru/news/2022/12/20/isu/',8,1,'2022-12-20 17:54:00+08','https://lenta.ru/news/2022/12/20/isu/','ISU лишил Россию еще двух турниров'),
+	 ('https://lenta.ru/news/2022/12/20/taz/',7,1,'2022-12-20 17:49:00+08','https://lenta.ru/news/2022/12/20/taz/','Российского опекуна обварившегося и погибшего ребенка осудили'),
+	 ('https://lenta.ru/news/2022/12/20/t90m/',6,1,'2022-12-20 17:48:00+08','https://lenta.ru/news/2022/12/20/t90m/','Танкисты в зоне СВО получили партию Т-90М'),
+	 ('https://lenta.ru/news/2022/12/20/rursprev/',9,1,'2022-12-20 17:46:00+08','https://lenta.ru/news/2022/12/20/rursprev/','Курс доллара превысил 69 рублей'),
+	 ('https://lenta.ru/news/2022/12/20/shebekino_vsu/',5,1,'2022-12-20 17:46:00+08','https://lenta.ru/news/2022/12/20/shebekino_vsu/','Власти раскрыли подробности об ударе ВСУ по приграничному российскому региону'),
+	 ('https://lenta.ru/news/2022/12/20/alcogols/',5,1,'2022-12-20 17:44:41+08','https://lenta.ru/news/2022/12/20/alcogols/','Минздрав сообщил о росте смертности от алкоголя среди одной категории россиян'),
+	 ('https://lenta.ru/news/2022/12/20/snkc/',4,1,'2022-12-20 17:43:03+08','https://lenta.ru/news/2022/12/20/snkc/','Страны ЕС уличили в попытке обойти антироссийские санкции'),
+	 ('https://lenta.ru/news/2022/12/20/snkc/',10,1,'2022-12-20 17:43:03+08','https://lenta.ru/news/2022/12/20/snkc/','Страны ЕС уличили в попытке обойти антироссийские санкции'),
+	 ('https://lenta.ru/news/2022/12/20/defensebudget/',4,1,'2022-12-20 17:40:00+08','https://lenta.ru/news/2022/12/20/defensebudget/','США увеличат оборонные расходы почти на 10 процентов');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://lenta.ru/news/2022/12/20/defensebudget/',10,1,'2022-12-20 17:40:00+08','https://lenta.ru/news/2022/12/20/defensebudget/','США увеличат оборонные расходы почти на 10 процентов'),
+	 ('https://lenta.ru/news/2022/12/20/himars/',5,1,'2022-12-20 17:40:00+08','https://lenta.ru/news/2022/12/20/himars/','Граничащий с Украиной российский регион обстреляли из HIMARS'),
+	 ('https://lenta.ru/news/2022/12/20/three/',5,1,'2022-12-20 17:37:00+08','https://lenta.ru/news/2022/12/20/three/','Тела трех человек нашли в российском жилом доме'),
+	 ('https://lenta.ru/news/2022/12/20/zhurnalistka/',2,1,'2022-12-20 17:37:00+08','https://lenta.ru/news/2022/12/20/zhurnalistka/','Датскую журналистку лишили аккредитации на Украине за «российскую пропаганду»'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956223-gosduma-vvodit-shtrafi',1,2,'2022-12-20 23:16:47+08','https://www.vedomosti.ru/society/news/2022/12/20/956223-gosduma-vvodit-shtrafi','Госдума вводит штрафы за распространение карт, оспаривающих целостность РФ'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956221-putin-zasedanie',10,2,'2022-12-20 22:58:25+08','https://www.vedomosti.ru/politics/news/2022/12/20/956221-putin-zasedanie','Путин проведет расширенное заседание коллегии Минобороны 21 декабря'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956212-kabmin-38-mlrd-rublei',1,2,'2022-12-20 22:48:52+08','https://www.vedomosti.ru/society/news/2022/12/20/956212-kabmin-38-mlrd-rublei','Кабмин выделит дополнительно 3,8 млрд рублей на повышение зарплат ученых'),
+	 ('https://www.vedomosti.ru/economics/news/2022/12/20/956208-gazprom-zayavil-o-vosstanovlenii',9,2,'2022-12-20 22:32:28+08','https://www.vedomosti.ru/economics/news/2022/12/20/956208-gazprom-zayavil-o-vosstanovlenii','«Газпром» заявил о восстановлении подачи газа потребителям в Чувашии'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956199-minyust-podal-isk',1,2,'2022-12-20 22:07:26+08','https://www.vedomosti.ru/society/news/2022/12/20/956199-minyust-podal-isk','Минюст РФ подал иск о ликвидации Московской Хельсинкской группы'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956200-bryanskoi-oblasti-ataki-bespilotnika',10,2,'2022-12-20 21:58:46+08','https://www.vedomosti.ru/politics/news/2022/12/20/956200-bryanskoi-oblasti-ataki-bespilotnika','В Брянской области сообщили о разрушениях после атаки украинского беспилотника');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956197-glava-parlamenta-krima',10,2,'2022-12-20 21:42:11+08','https://www.vedomosti.ru/politics/news/2022/12/20/956197-glava-parlamenta-krima','Глава парламента Крыма спрогнозировал освобождение Одессы, Николаева и Харькова'),
+	 ('https://www.vedomosti.ru/economics/news/2022/12/20/956198-tseni-na-gaz',9,2,'2022-12-20 21:36:43+08','https://www.vedomosti.ru/economics/news/2022/12/20/956198-tseni-na-gaz','Цены на газ превысили $1200 за 1000 куб. м после взрыва на газопроводе в Чувашии'),
+	 ('https://www.vedomosti.ru/finance/news/2022/12/20/956195-gosduma-prinyala-zakon',9,2,'2022-12-20 21:29:46+08','https://www.vedomosti.ru/finance/news/2022/12/20/956195-gosduma-prinyala-zakon','Госдума приняла закон о запрете переводов по исполнительным листам за границу'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956185-tri-cheloveka-pogibli-pri-vzrive-v-chuvashii',1,2,'2022-12-20 21:00:08+08','https://www.vedomosti.ru/society/news/2022/12/20/956185-tri-cheloveka-pogibli-pri-vzrive-v-chuvashii','Три человека погибли при взрыве на газопроводе в Чувашии'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956186-putin-vruchil-nagradu-simonyan',1,2,'2022-12-20 20:58:55+08','https://www.vedomosti.ru/society/news/2022/12/20/956186-putin-vruchil-nagradu-simonyan','Путин наградил Маргариту Симоньян орденом Почета'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956181-v-mchs-soobschili-ob-otsutstvii-zapreta-salyutov',1,2,'2022-12-20 20:36:52+08','https://www.vedomosti.ru/society/news/2022/12/20/956181-v-mchs-soobschili-ob-otsutstvii-zapreta-salyutov','В МЧС сообщили об отсутствии запрета салютов в новогоднюю ночь'),
+	 ('https://www.vedomosti.ru/finance/news/2022/12/20/956180-gosduma-zaschiti-sanktsii-bankov',9,2,'2022-12-20 20:34:59+08','https://www.vedomosti.ru/finance/news/2022/12/20/956180-gosduma-zaschiti-sanktsii-bankov','Госдума приняла закон для защиты от санкций банков с долей участия России'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956178-v-tsar-zaderzhali-sem-chelovek',10,2,'2022-12-20 20:32:09+08','https://www.vedomosti.ru/politics/news/2022/12/20/956178-v-tsar-zaderzhali-sem-chelovek','В ЦАР задержали семь человек по делу о теракте против главы «Русского дома»'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956175-minoboroni-soobschilo-ob-unichtozhenii-treh-ukrainskih-samoletov',10,2,'2022-12-20 20:26:37+08','https://www.vedomosti.ru/politics/news/2022/12/20/956175-minoboroni-soobschilo-ob-unichtozhenii-treh-ukrainskih-samoletov','Минобороны сообщило об уничтожении трех украинских самолетов в ДНР'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956176-v-mchs-rasskazali-o-zhelanii-planovo-proveryat-tts',1,2,'2022-12-20 20:24:08+08','https://www.vedomosti.ru/society/news/2022/12/20/956176-v-mchs-rasskazali-o-zhelanii-planovo-proveryat-tts','В МЧС рассказали о планах проверить ТЦ и площадки значительного риска');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956174-vtorim-senatorom-ot-lnr-v-sovfede-stala-lantratova',10,2,'2022-12-20 20:13:08+08','https://www.vedomosti.ru/politics/news/2022/12/20/956174-vtorim-senatorom-ot-lnr-v-sovfede-stala-lantratova','Вторым сенатором от ЛНР в Совфеде стала Дарья Лантратова'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956173-v-chuvashii-pozhar',1,2,'2022-12-20 19:59:24+08','https://www.vedomosti.ru/society/news/2022/12/20/956173-v-chuvashii-pozhar','В Чувашии из-за утечки произошел пожар на газопроводе'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956167-rossiiskie-voennie-demonstriruyut',10,2,'2022-12-20 19:47:56+08','https://www.vedomosti.ru/politics/news/2022/12/20/956167-rossiiskie-voennie-demonstriruyut','Путин: российские военные демонстрируют исключительные примеры храбрости'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956164-reiting-vozglavili-sahalin-chukotka',1,2,'2022-12-20 19:37:11+08','https://www.vedomosti.ru/society/news/2022/12/20/956164-reiting-vozglavili-sahalin-chukotka','Рейтинг «самых пьющих» регионов возглавили Сахалин, Чукотка и Курганская область'),
+	 ('https://www.vedomosti.ru/business/news/2022/12/20/956161-upravlyayuschaya-zara-zaregistrirovala',9,2,'2022-12-20 19:13:12+08','https://www.vedomosti.ru/business/news/2022/12/20/956161-upravlyayuschaya-zara-zaregistrirovala','Управляющая брендом Zara в РФ компания зарегистрировала новые доменные имена'),
+	 ('https://tass.ru/obschestvo/16643629',1,3,'2022-12-20 23:17:36+08','https://tass.ru/obschestvo/16643629','В чешском зоопарке родился детеныш находящегося на грани вымирания черного носорога'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956159-putin-vruchil-glavam-prisoedinennih-regionov-gosudarstvennie-nagradi',10,2,'2022-12-20 19:01:41+08','https://www.vedomosti.ru/politics/news/2022/12/20/956159-putin-vruchil-glavam-prisoedinennih-regionov-gosudarstvennie-nagradi','Путин вручил главам новых регионов государственные награды'),
+	 ('https://www.vedomosti.ru/finance/news/2022/12/20/956157-gosdume-limit-besplatnih-perevodov',9,2,'2022-12-20 18:56:54+08','https://www.vedomosti.ru/finance/news/2022/12/20/956157-gosdume-limit-besplatnih-perevodov','В Госдуме допустили изменение лимита бесплатных переводов между своими счетами'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956144-v-minobranuki-sochli-netselesoobraznim-polnii-vozvrat-k-spetsialitetu',1,2,'2022-12-20 18:54:53+08','https://www.vedomosti.ru/society/news/2022/12/20/956144-v-minobranuki-sochli-netselesoobraznim-polnii-vozvrat-k-spetsialitetu','В Минобрнауки сочли нецелесообразным полный возврат к специалитету'),
+	 ('https://www.vedomosti.ru/technology/news/2022/12/20/956154-rossiiskii-analog-vikipedii-planiruyut-zapustit',2,2,'2022-12-20 18:54:26+08','https://www.vedomosti.ru/technology/news/2022/12/20/956154-rossiiskii-analog-vikipedii-planiruyut-zapustit','Российский аналог «Википедии» планируют запустить в начале 2023 года');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956155-putin-rossii-broshen-vizov',10,2,'2022-12-20 18:45:53+08','https://www.vedomosti.ru/politics/news/2022/12/20/956155-putin-rossii-broshen-vizov','Путин: России вновь брошен вызов'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956148-pozdnyakova-pereizbrali-na-post-prezidenta-olimpiiskogo-komiteta',1,2,'2022-12-20 18:32:15+08','https://www.vedomosti.ru/society/news/2022/12/20/956148-pozdnyakova-pereizbrali-na-post-prezidenta-olimpiiskogo-komiteta','Позднякова переизбрали на пост президента Олимпийского комитета России'),
+	 ('https://www.vedomosti.ru/technology/news/2022/12/20/956142-mintsifri-10-it-spetsialistov-s-fevralya-uehali-za-granitsu',6,2,'2022-12-20 18:29:51+08','https://www.vedomosti.ru/technology/news/2022/12/20/956142-mintsifri-10-it-spetsialistov-s-fevralya-uehali-za-granitsu','Минцифры: 10% IT-специалистов с февраля уехали за границу и не вернулись'),
+	 ('https://www.vedomosti.ru/business/news/2022/12/20/956149-o-vtorom-etape-programmi-investkvot-na-mintai',9,2,'2022-12-20 18:27:56+08','https://www.vedomosti.ru/business/news/2022/12/20/956149-o-vtorom-etape-programmi-investkvot-na-mintai','Госдума приняла законопроект о втором этапе программы инвестквот на минтай, сельдь и краба'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956146-roskachestvo-uzhestochit-haggi-vaggi',1,2,'2022-12-20 18:22:54+08','https://www.vedomosti.ru/society/news/2022/12/20/956146-roskachestvo-uzhestochit-haggi-vaggi','Роскачество предложило ужесточить требования для игрушечных монстров «Хагги Вагги»'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956143-odin-chelovek-postradal-pri-obstrele-v-belgorodskoi-oblasti',1,2,'2022-12-20 18:08:39+08','https://www.vedomosti.ru/society/news/2022/12/20/956143-odin-chelovek-postradal-pri-obstrele-v-belgorodskoi-oblasti','Один человек пострадал при обстреле в Белгородской области'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956139-v-rossii-chislo-stradayuschih-ot-alkogolizma-zhitelei-sel-uvelichilos',1,2,'2022-12-20 17:57:21+08','https://www.vedomosti.ru/society/news/2022/12/20/956139-v-rossii-chislo-stradayuschih-ot-alkogolizma-zhitelei-sel-uvelichilos','В России число страдающих от алкоголизма жителей сел за год увеличилось на 7%'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956137-sud-oshtrafoval-nadpisi-net-voble',1,2,'2022-12-20 17:47:55+08','https://www.vedomosti.ru/society/news/2022/12/20/956137-sud-oshtrafoval-nadpisi-net-voble','Суд после пересмотра решения оштрафовал россиянку по делу о надписи «нет вобле»'),
+	 ('https://www.vedomosti.ru/realty/news/2022/12/20/956132-cherkizovo-kupit-u-trasta-zdorovuyu-fermu',9,2,'2022-12-20 17:29:51+08','https://www.vedomosti.ru/realty/news/2022/12/20/956132-cherkizovo-kupit-u-trasta-zdorovuyu-fermu','«Черкизово» купит у «Траста» «Здоровую ферму»'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956130-nizhnii-novgorod-pobedil-v-golosovanii-za-zvanie-molodezhnoi-stolitsi',1,2,'2022-12-20 17:28:42+08','https://www.vedomosti.ru/society/news/2022/12/20/956130-nizhnii-novgorod-pobedil-v-golosovanii-za-zvanie-molodezhnoi-stolitsi','Нижний Новгород победил в голосовании за звание молодежной столицы России');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956126-rospotrebnadzor-soobschil-o-viyavlenii-svinogo-grippa',1,2,'2022-12-20 17:20:36+08','https://www.vedomosti.ru/society/news/2022/12/20/956126-rospotrebnadzor-soobschil-o-viyavlenii-svinogo-grippa','Роспотребнадзор сообщил о выявлении свиного гриппа почти во всех регионах'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956119-nebenzya-iranskih-bespilotnikov',10,2,'2022-12-20 16:54:34+08','https://www.vedomosti.ru/politics/news/2022/12/20/956119-nebenzya-iranskih-bespilotnikov','Небензя назвал надуманными обвинения России в применении иранских беспилотников'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956121-mvd-obyavilo-v-rozisk-gelmana',1,2,'2022-12-20 16:53:34+08','https://www.vedomosti.ru/society/news/2022/12/20/956121-mvd-obyavilo-v-rozisk-gelmana','МВД объявило в розыск Марата Гельмана'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956118-28-detei-otravilis-v-shkolnoi-stolovoi',1,2,'2022-12-20 16:47:54+08','https://www.vedomosti.ru/society/news/2022/12/20/956118-28-detei-otravilis-v-shkolnoi-stolovoi','28 детей отравились в школьной столовой в Красноярском крае'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956116-zapusk-feierverkov-v-novogodnyuyu-noch-stanet-narusheniem',1,2,'2022-12-20 16:44:21+08','https://www.vedomosti.ru/society/news/2022/12/20/956116-zapusk-feierverkov-v-novogodnyuyu-noch-stanet-narusheniem','МЧС: запуск фейерверков в новогоднюю ночь в Москве станет нарушением закона о тишине'),
+	 ('https://www.vedomosti.ru/finance/news/2022/12/20/956112-kurs-evro',9,2,'2022-12-20 16:14:00+08','https://www.vedomosti.ru/finance/news/2022/12/20/956112-kurs-evro','Курс евро на Мосбирже превысил 74 рубля впервые с мая'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956111-sud-priznal-vainshteina-vinovnim-v-esche-odnom-iznasilovanii',1,2,'2022-12-20 16:06:28+08','https://www.vedomosti.ru/society/news/2022/12/20/956111-sud-priznal-vainshteina-vinovnim-v-esche-odnom-iznasilovanii','Суд признал Вайнштейна виновным в еще одном изнасиловании'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956107-shtraf-do-5-mln-za-oskvernenie-georgievskoi-lenti',1,2,'2022-12-20 15:42:03+08','https://www.vedomosti.ru/society/news/2022/12/20/956107-shtraf-do-5-mln-za-oskvernenie-georgievskoi-lenti','Госдума одобрила штраф до 5 млн рублей за осквернение георгиевской ленты'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956105-kongress-byudzhetnii-zakonoproekt',10,2,'2022-12-20 15:39:48+08','https://www.vedomosti.ru/politics/news/2022/12/20/956105-kongress-byudzhetnii-zakonoproekt','В конгресс США внесли проект бюджета на $1,7 трлн'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956104-sud-v-argentine-otkazal-zaderzhannim-po-zaprosu-ssha',10,2,'2022-12-20 15:36:26+08','https://www.vedomosti.ru/politics/news/2022/12/20/956104-sud-v-argentine-otkazal-zaderzhannim-po-zaprosu-ssha','Суд в Аргентине отказал задержанным по запросу США россиянам в домашнем аресте');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956097-mid-60-rossiyan',10,2,'2022-12-20 15:12:24+08','https://www.vedomosti.ru/politics/news/2022/12/20/956097-mid-60-rossiyan','МИД: более 60 россиян отбывают наказание в США по несправедливым обвинениям'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956093-v-fss-rasskazali-o-viplatah-po-bolnichnomu',1,2,'2022-12-20 14:58:13+08','https://www.vedomosti.ru/society/news/2022/12/20/956093-v-fss-rasskazali-o-viplatah-po-bolnichnomu','В ФСС рассказали о выплатах по больничному со следующего года'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956092-kommersant-kurerov-yandeksedi-zabastovku',1,2,'2022-12-20 14:46:40+08','https://www.vedomosti.ru/society/news/2022/12/20/956092-kommersant-kurerov-yandeksedi-zabastovku','«Коммерсантъ» узнал о планах курьеров «Яндекс.Еды» объявить забастовку'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956091-posolstvo-o-vozvraschenii-lichnih-veschei-buta',10,2,'2022-12-20 14:25:38+08','https://www.vedomosti.ru/politics/news/2022/12/20/956091-posolstvo-o-vozvraschenii-lichnih-veschei-buta','Посольство России сообщило о возвращении личных вещей Виктора Бута из США'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956090-rospotrebnadzor-upravleniya',10,2,'2022-12-20 14:14:29+08','https://www.vedomosti.ru/politics/news/2022/12/20/956090-rospotrebnadzor-upravleniya','Роспотребнадзор создал управления в ДНР, ЛНР, Херсонской и Запорожской областях'),
+	 ('https://www.vedomosti.ru/business/news/2022/12/20/956087-transneft-poluchila-zayavki-ot-polshi-i-germanii',9,2,'2022-12-20 13:41:22+08','https://www.vedomosti.ru/business/news/2022/12/20/956087-transneft-poluchila-zayavki-ot-polshi-i-germanii','«Транснефть» получила заявки от Польши и Германии на прокачку нефти в 2023 году'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956085-o-tribunale-na-ukraine',10,2,'2022-12-20 13:12:00+08','https://www.vedomosti.ru/politics/news/2022/12/20/956085-o-tribunale-na-ukraine','В МИДе назвали идею о трибунале попыткой ЕС скрыть участие в преступлениях на Украине'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/20/956084-putin-poruchil-usilit-rabotu-organov-bezopasnosti',1,2,'2022-12-20 13:01:20+08','https://www.vedomosti.ru/society/news/2022/12/20/956084-putin-poruchil-usilit-rabotu-organov-bezopasnosti','Путин поручил усилить работу органов безопасности'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956083-v-bryanskoi-oblasti-soobschili-ob-obstrele',10,2,'2022-12-20 12:34:39+08','https://www.vedomosti.ru/politics/news/2022/12/20/956083-v-bryanskoi-oblasti-soobschili-ob-obstrele','В Брянской области сообщили об обстреле Суземского района'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/20/956082-putin-nazval-obstanovku-v-prisoedinennih-regionah',10,2,'2022-12-20 12:22:37+08','https://www.vedomosti.ru/politics/news/2022/12/20/956082-putin-nazval-obstanovku-v-prisoedinennih-regionah','Путин назвал обстановку в присоединенных регионах «крайне сложной»');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/economics/news/2022/12/19/956081-lukashenko-dovolen',9,2,'2022-12-20 03:48:49+08','https://www.vedomosti.ru/economics/news/2022/12/19/956081-lukashenko-dovolen','Лукашенко заявил, что Минск доволен ценой на российский газ'),
+	 ('https://www.vedomosti.ru/finance/news/2022/12/19/956080-obem-zamorozhennih-previsil',9,2,'2022-12-20 03:31:10+08','https://www.vedomosti.ru/finance/news/2022/12/19/956080-obem-zamorozhennih-previsil','Объем замороженных в Германии российских активов превысил 5 млрд евро'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956078-putin-oproverg-plani',10,2,'2022-12-20 03:10:31+08','https://www.vedomosti.ru/politics/news/2022/12/19/956078-putin-oproverg-plani','Путин опроверг планы «поглощения» Белоруссии'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956076-rossiya-i-belorussiya-budut',10,2,'2022-12-20 02:50:27+08','https://www.vedomosti.ru/politics/news/2022/12/19/956076-rossiya-i-belorussiya-budut','Россия и Белоруссия будут совместно производить военную технику'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956074-reaktsiya-zapada-dokazala',10,2,'2022-12-20 02:34:25+08','https://www.vedomosti.ru/politics/news/2022/12/19/956074-reaktsiya-zapada-dokazala','Лавров: реакция Запада доказала необходимость спецоперации'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956066-peskov-nazval-potolok-posyagatelstvom',10,2,'2022-12-20 02:15:57+08','https://www.vedomosti.ru/politics/news/2022/12/19/956066-peskov-nazval-potolok-posyagatelstvom','Песков назвал потолок цен на газ посягательством на рыночные процессы'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956063-medvedev-prizval-vernut-folklendi',10,2,'2022-12-20 01:56:14+08','https://www.vedomosti.ru/politics/news/2022/12/19/956063-medvedev-prizval-vernut-folklendi','Медведев призвал Великобританию вернуть Фолкленды Аргентине'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956053-peregovori-putina-i-lukashenko',10,2,'2022-12-20 01:30:31+08','https://www.vedomosti.ru/politics/news/2022/12/19/956053-peregovori-putina-i-lukashenko','Переговоры Путина и Лукашенко длились свыше двух с половиной часов'),
+	 ('https://www.vedomosti.ru/business/news/2022/12/19/956051-yandeks-zapustil',9,2,'2022-12-20 01:04:07+08','https://www.vedomosti.ru/business/news/2022/12/19/956051-yandeks-zapustil','«Яндекс» запустил сервис электронных и аудиокниг'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/19/956050-v-gosdume-planiruyut-zapretit',1,2,'2022-12-20 00:55:53+08','https://www.vedomosti.ru/society/news/2022/12/19/956050-v-gosdume-planiruyut-zapretit','В Госдуме планируют запретить нерезидентам заключать договоры об удаленной работе');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956048-guterrish-dopusti-zavershenie',10,2,'2022-12-20 00:44:17+08','https://www.vedomosti.ru/politics/news/2022/12/19/956048-guterrish-dopusti-zavershenie','Гутерриш допустил завершение конфликта на Украине в 2023 году'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/19/956044-uchastniki-sezda-podtverdili',1,2,'2022-12-20 00:30:42+08','https://www.vedomosti.ru/society/news/2022/12/19/956044-uchastniki-sezda-podtverdili','Участники съезда движения детей и молодежи подтвердили его название'),
+	 ('https://www.vedomosti.ru/economics/news/2022/12/19/956045-ctrani-es-soglasovali',9,2,'2022-12-20 00:08:28+08','https://www.vedomosti.ru/economics/news/2022/12/19/956045-ctrani-es-soglasovali','Cтраны ЕС согласовали потолок цен на газ'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956040-mogilevskii-naznachen',10,2,'2022-12-19 23:52:39+08','https://www.vedomosti.ru/politics/news/2022/12/19/956040-mogilevskii-naznachen','Константин Могилевский назначен на должность замглавы Минобрнауки'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956035-lukashenko-otsenil-sovmestnuyu',10,2,'2022-12-19 23:44:48+08','https://www.vedomosti.ru/politics/news/2022/12/19/956035-lukashenko-otsenil-sovmestnuyu','Лукашенко оценил совместную работу с РФ по преодолению санкционного давления'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956034-mid-reshaet-iordaniyu',10,2,'2022-12-19 23:39:05+08','https://www.vedomosti.ru/politics/news/2022/12/19/956034-mid-reshaet-iordaniyu','МИД решает проблему с полетами российских самолетов через Иорданию'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956030-sk-vozbudil-delo-posle-obstrela',10,2,'2022-12-19 23:22:06+08','https://www.vedomosti.ru/politics/news/2022/12/19/956030-sk-vozbudil-delo-posle-obstrela','СК возбудил уголовное дело после обстрела поселка в Белгородской области'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956026-avtomobilnoe-dvizhenie',10,2,'2022-12-19 23:07:00+08','https://www.vedomosti.ru/politics/news/2022/12/19/956026-avtomobilnoe-dvizhenie','Автомобильное движение по Крымскому мосту возобновлено'),
+	 ('https://www.vedomosti.ru/economics/news/2022/12/19/956021-putin-dopustil-rekord',9,2,'2022-12-19 22:53:15+08','https://www.vedomosti.ru/economics/news/2022/12/19/956021-putin-dopustil-rekord','Путин допустил новый рекорд в товарообороте с Белоруссией в 2022 году'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956024-kurskoi-oblasti-vtorom-obstrele',10,2,'2022-12-19 22:45:32+08','https://www.vedomosti.ru/politics/news/2022/12/19/956024-kurskoi-oblasti-vtorom-obstrele','В Курской области сообщили о втором обстреле ВСУ за день');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956022-putin-nazval-belorussiyu-soyuznikom',10,2,'2022-12-19 22:33:46+08','https://www.vedomosti.ru/politics/news/2022/12/19/956022-putin-nazval-belorussiyu-soyuznikom','Путин назвал Белоруссию «союзником в прямом смысле»'),
+	 ('https://www.vedomosti.ru/politics/news/2022/12/19/956019-mid-vengrii-potolok-tsen',10,2,'2022-12-19 22:32:01+08','https://www.vedomosti.ru/politics/news/2022/12/19/956019-mid-vengrii-potolok-tsen','МИД Венгрии: девять стран ЕС не поддержали потолок цен на газ'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/19/956011-sud-ne-otmenil-shtraf',1,2,'2022-12-19 22:22:55+08','https://www.vedomosti.ru/society/news/2022/12/19/956011-sud-ne-otmenil-shtraf','Верховный суд Башкирии не отменил штраф Шевчуку за дискредитацию армии'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/19/956012-putin-rekomendoval-videlit-geroyam-uchastki',1,2,'2022-12-19 22:16:11+08','https://www.vedomosti.ru/society/news/2022/12/19/956012-putin-rekomendoval-videlit-geroyam-uchastki','Путин рекомендовал выделить героям СВО земельные участки в Крыму и Подмосковье'),
+	 ('https://www.vedomosti.ru/technology/news/2022/12/19/956009-roskosmose-soyuz-rabochem-sostoyanii',6,2,'2022-12-19 22:08:50+08','https://www.vedomosti.ru/technology/news/2022/12/19/956009-roskosmose-soyuz-rabochem-sostoyanii','В «Роскосмосе» сообщили, что «Союз МС-22» находится в рабочем состоянии'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/19/956003-mer-soobschilo-o-vozvraschenii',1,2,'2022-12-19 21:52:07+08','https://www.vedomosti.ru/society/news/2022/12/19/956003-mer-soobschilo-o-vozvraschenii','МЭР сообщило о возвращении из Египта более 1000 российских туристов'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/19/955985-doch-bivshego-mera-prigovorili',1,2,'2022-12-19 21:42:28+08','https://www.vedomosti.ru/society/news/2022/12/19/955985-doch-bivshego-mera-prigovorili','Дочь бывшего мэра Самары приговорили к семи годам колонии за вымогательство'),
+	 ('https://www.vedomosti.ru/business/news/2022/12/19/955997-verhovnii-sud-zapretil-naznachat',9,2,'2022-12-19 21:37:04+08','https://www.vedomosti.ru/business/news/2022/12/19/955997-verhovnii-sud-zapretil-naznachat','Верховный суд России запретил гендиректорам компаний назначать себе премии'),
+	 ('https://www.vedomosti.ru/society/news/2022/12/19/955993-putin-den-sambo',1,2,'2022-12-19 21:32:01+08','https://www.vedomosti.ru/society/news/2022/12/19/955993-putin-den-sambo','Путин установил День самбо 16 ноября'),
+	 ('https://www.vedomosti.ru/finance/news/2022/12/19/955983-evro-podnyalsya',9,2,'2022-12-19 21:02:19+08','https://www.vedomosti.ru/finance/news/2022/12/19/955983-evro-podnyalsya','Евро поднялся выше 72 рублей впервые с 11 мая');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16643715',4,3,'2022-12-20 23:19:33+08','https://tass.ru/mezhdunarodnaya-panorama/16643715','В Белоруссии в первом чтении приняли законопроект о гармонизации с РФ госпрогнозирования'),
+	 ('https://tass.ru/sport/16643781',8,3,'2022-12-20 23:18:20+08','https://tass.ru/sport/16643781','Агент футболиста "Зенита" Клаудиньо заявил, что игрок не перейдет в "Палмейрас"'),
+	 ('https://tass.ru/kosmos/16643761',6,3,'2022-12-20 23:18:04+08','https://tass.ru/kosmos/16643761','Шесть кандидатов в космонавты из Белоруссии прибыли в ЦПК для отбора'),
+	 ('https://tass.ru/obschestvo/16643571',1,3,'2022-12-20 23:16:25+08','https://tass.ru/obschestvo/16643571','В Севастополе утвердили проект строительства спортивно-оздоровительного центра'),
+	 ('https://tass.ru/proisshestviya/16643721',5,3,'2022-12-20 23:16:16+08','https://tass.ru/proisshestviya/16643721','В Москве женщина упала под поезд на станции метро "Менделеевская"'),
+	 ('https://tass.ru/ekonomika/16643671',9,3,'2022-12-20 23:15:11+08','https://tass.ru/ekonomika/16643671','Глава "Нафтогаза" назвал условия для отказа от импорта газа в 2023 году'),
+	 ('https://tass.ru/obschestvo/16643665',1,3,'2022-12-20 23:14:40+08','https://tass.ru/obschestvo/16643665','Дума приняла закон о возможности проведения дистанционных медосмотров водителей'),
+	 ('https://tass.ru/ekonomika/16643609',9,3,'2022-12-20 23:12:44+08','https://tass.ru/ekonomika/16643609','Производитель туалетной бумаги Zewa локализовал производство 70 товаров в России'),
+	 ('https://tass.ru/ekonomika/16643677',9,3,'2022-12-20 23:11:19+08','https://tass.ru/ekonomika/16643677','Минэкономики Германии: НПЗ в Шведте подал заявку на прокачку нефти из Казахстана'),
+	 ('https://tass.ru/obschestvo/16643591',1,3,'2022-12-20 23:08:53+08','https://tass.ru/obschestvo/16643591','В Коми зафиксировали четыре смерти от гриппа с начала эпидсезона');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16642939',4,3,'2022-12-20 23:06:55+08','https://tass.ru/mezhdunarodnaya-panorama/16642939','Глава МИД Швеции обсудит в Анкаре вступление королевства в НАТО'),
+	 ('https://tass.ru/ekonomika/16643543',9,3,'2022-12-20 23:04:25+08','https://tass.ru/ekonomika/16643543','Украина получила от Нидерландов кредит в €200 млн на льготных условиях'),
+	 ('https://tass.ru/kultura/16643323',3,3,'2022-12-20 23:01:39+08','https://tass.ru/kultura/16643323','В проекте "Культурный марафон" в 2022 году приняли участие более 1,4 млн человек'),
+	 ('https://tass.ru/ekonomika/16643459',9,3,'2022-12-20 23:01:15+08','https://tass.ru/ekonomika/16643459','В Карелии сообщили, что вложения в экономику достигли максимальных для региона показателей'),
+	 ('https://tass.ru/ekonomika/16643541',9,3,'2022-12-20 23:00:56+08','https://tass.ru/ekonomika/16643541','Мосбиржа 26 декабря прекратит торги акциями "Россетей"'),
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16643379',4,3,'2022-12-20 23:00:18+08','https://tass.ru/mezhdunarodnaya-panorama/16643379','В Белоруссии возбудили дело против находящегося за рубежом оппозиционера Андрея Паука'),
+	 ('https://tass.ru/ekonomika/16643481',9,3,'2022-12-20 23:00:03+08','https://tass.ru/ekonomika/16643481','На Ставрополье в 2024 году откроется универсальный склад'),
+	 ('https://tass.ru/obschestvo/16642761',1,3,'2022-12-20 23:00:00+08','https://tass.ru/obschestvo/16642761','Пожар на газопроводе в Чувашии и вручение госнаград в Кремле. Главные события 20 декабря'),
+	 ('https://tass.ru/obschestvo/16643527',1,3,'2022-12-20 22:59:02+08','https://tass.ru/obschestvo/16643527','В Ялте наладили производство печек-буржуек для участников СВО'),
+	 ('https://tass.ru/obschestvo/16643487',1,3,'2022-12-20 22:57:47+08','https://tass.ru/obschestvo/16643487','РГО запустило образовательный портал с использованием VR-технологий');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/politika/16643521',10,3,'2022-12-20 22:57:09+08','https://tass.ru/politika/16643521','Прекращено действие соглашения между РФ и Украиной о признании документов об образовании'),
+	 ('https://tass.ru/ekonomika/16643463',9,3,'2022-12-20 22:56:45+08','https://tass.ru/ekonomika/16643463','Белорусские депутаты приняли дефицитный бюджет с увеличенными расходами на оборону'),
+	 ('https://tass.ru/nacionalnye-proekty/16643457',5,3,'2022-12-20 22:53:25+08','https://tass.ru/nacionalnye-proekty/16643457','Гладков сообщил об открытии медпункта в белгородском селе после капремонта'),
+	 ('https://tass.ru/ekonomika/16643401',9,3,'2022-12-20 22:53:19+08','https://tass.ru/ekonomika/16643401','Белоусов заявил, что к обсуждению реформы банкротства придется вернуться в 2023 году'),
+	 ('https://tass.ru/politika/16643471',10,3,'2022-12-20 22:51:45+08','https://tass.ru/politika/16643471','Путин поздравил да Силву с победой на выборах президента Бразилии'),
+	 ('https://tass.ru/ekonomika/16643215',9,3,'2022-12-20 22:50:24+08','https://tass.ru/ekonomika/16643215','Дума приняла закон о перечислении денег по исполнительным документам только на счета РФ'),
+	 ('https://tass.ru/obschestvo/16643333',1,3,'2022-12-20 22:50:12+08','https://tass.ru/obschestvo/16643333','Заболеваемость гриппом и ОРВИ в Ставрополье выросла за неделю на 44%'),
+	 ('https://tass.ru/obschestvo/16643365',1,3,'2022-12-20 22:48:46+08','https://tass.ru/obschestvo/16643365','В первый календарь креативных проектов Свердловской области вошли более 20 мероприятий'),
+	 ('https://tass.ru/politika/16643283',10,3,'2022-12-20 22:48:17+08','https://tass.ru/politika/16643283','Лавров заявил, что Западу не удалось изолировать Россию в ЮНЕСКО'),
+	 ('https://tass.ru/ekonomika/16643407',9,3,'2022-12-20 22:48:15+08','https://tass.ru/ekonomika/16643407','CNBC: Илон Маск активно занимается поиском нового главы Twitter');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/kultura/16643277',3,3,'2022-12-20 22:46:24+08','https://tass.ru/kultura/16643277','Музей истории религий в Петербурге представил на выставке рукопись IV века'),
+	 ('https://tass.ru/obschestvo/16643265',5,3,'2022-12-20 22:45:43+08','https://tass.ru/obschestvo/16643265','В Москве объявили результаты премии "Крылья аиста"'),
+	 ('https://tass.ru/proisshestviya/16643347',7,3,'2022-12-20 22:45:41+08','https://tass.ru/proisshestviya/16643347','СК возбудил дело по факту пожара на газопроводе в Чувашии'),
+	 ('https://tass.ru/ekonomika/16643143',9,3,'2022-12-20 22:45:07+08','https://tass.ru/ekonomika/16643143','В Думе подготовили законопроект об использовании сельскохозяйственных земель для туризма'),
+	 ('https://tass.ru/obschestvo/16643057',1,3,'2022-12-20 22:43:38+08','https://tass.ru/obschestvo/16643057','Британские депутаты призвали принять меры против Джереми Кларксона за его статью о Маркл'),
+	 ('https://tass.ru/sport/16643235',8,3,'2022-12-20 22:39:27+08','https://tass.ru/sport/16643235','Позднякова переизбрали главой Олимпийского комитета России, Борзаковский сменил Великую'),
+	 ('https://tass.ru/obschestvo/16643211',1,3,'2022-12-20 22:39:05+08','https://tass.ru/obschestvo/16643211','В Дагестане число школ и детсадов на карантине увеличилось почти до 60 за сутки из-за ОРВИ'),
+	 ('https://tass.ru/ekonomika/16643171',9,3,'2022-12-20 22:36:53+08','https://tass.ru/ekonomika/16643171','Специалисты не зафиксировали влияние ситуации с iFly на продажи туров в Египет'),
+	 ('https://tass.ru/ekonomika/16643137',9,3,'2022-12-20 22:35:04+08','https://tass.ru/ekonomika/16643137','РЖД создаст новую инфраструктуру для перевалки грузов в Осенцовском промузле'),
+	 ('https://tass.ru/ekonomika/16643183',9,3,'2022-12-20 22:34:48+08','https://tass.ru/ekonomika/16643183','Производители БПЛА в Башкирии получат в 2023 году господдержку на покупку комплектующих');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16643227',4,3,'2022-12-20 22:34:24+08','https://tass.ru/mezhdunarodnaya-panorama/16643227','Госдеп заявил, что США выступают за сохранение дипломатических каналов с Россией'),
+	 ('https://tass.ru/obschestvo/16643195',1,3,'2022-12-20 22:32:37+08','https://tass.ru/obschestvo/16643195','Процесс депортации из США в РФ Юрия Мартышева должен начаться в течение 48 часов'),
+	 ('https://tass.ru/kosmos/16643157',6,3,'2022-12-20 22:30:35+08','https://tass.ru/kosmos/16643157','Глава Роскосмоса сообщил, что США предложили помощь в спуске экипажа "Союза МС-22"'),
+	 ('https://tass.ru/kultura/16642885',3,3,'2022-12-20 22:29:13+08','https://tass.ru/kultura/16642885','Доступ к национальной электронной библиотеке предложили открыть для новых регионов'),
+	 ('https://tass.ru/obschestvo/16643005',1,3,'2022-12-20 22:28:09+08','https://tass.ru/obschestvo/16643005','В Петербурге создали экономичную модель промышленного манипулятора на основе пневмомышц'),
+	 ('https://tass.ru/politika/16643117',10,3,'2022-12-20 22:27:58+08','https://tass.ru/politika/16643117','Сенатором от Херсонской области в Совфеде стал советник врио губернатора Константин Басюк'),
+	 ('https://tass.ru/ekonomika/16642177',9,3,'2022-12-20 22:27:56+08','https://tass.ru/ekonomika/16642177','В Белоруссии приняли законопроект, предусматривающий повышение ряда налогов и отмену льгот'),
+	 ('https://tass.ru/obschestvo/16642955',1,3,'2022-12-20 22:25:28+08','https://tass.ru/obschestvo/16642955','Путин получил приглашение на 45-летие отряда "Витязь" Росгвардии'),
+	 ('https://tass.ru/obschestvo/16642879',1,3,'2022-12-20 22:25:13+08','https://tass.ru/obschestvo/16642879','Госдума приняла в I чтении законопроекты о создании судов в Запорожской области'),
+	 ('https://tass.ru/obschestvo/16643065',1,3,'2022-12-20 22:24:59+08','https://tass.ru/obschestvo/16643065','Дума вводит штрафы до 1 млн рублей за распространение карт, оспаривающих целостность РФ');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/obschestvo/16642987',1,3,'2022-12-20 22:24:30+08','https://tass.ru/obschestvo/16642987','В Хабаровском крае мобилизованным помогут с газификацией домов'),
+	 ('https://tass.ru/ekonomika/16642963',9,3,'2022-12-20 22:22:09+08','https://tass.ru/ekonomika/16642963','Новак: введение ценового потолка на газ в Европе приведет лишь к его дефициту в регионе'),
+	 ('https://tass.ru/ekonomika/16642981',9,3,'2022-12-20 22:21:41+08','https://tass.ru/ekonomika/16642981','Новак сообщил, что нового акционера "Сахалина-2" пока не определили'),
+	 ('https://tass.ru/obschestvo/16642821',1,3,'2022-12-20 22:20:15+08','https://tass.ru/obschestvo/16642821','Дума изменила сроки вступления в силу норм о семеноводстве и контроле ветпрепаратов'),
+	 ('https://tass.ru/obschestvo/16642643',1,3,'2022-12-20 22:19:58+08','https://tass.ru/obschestvo/16642643','Педагогические университеты создадут в ЛНР и Запорожской области на базе действующих вузов'),
+	 ('https://tass.ru/obschestvo/16642923',1,3,'2022-12-20 22:19:01+08','https://tass.ru/obschestvo/16642923','Более 12 тыс. детей посетят губернаторскую елку в Подмосковье'),
+	 ('https://tass.ru/sport/16642891',8,3,'2022-12-20 22:17:30+08','https://tass.ru/sport/16642891','Сорокин отметил преемственность между чемпионатами мира в России и Катаре'),
+	 ('https://tass.ru/proisshestviya/16642777',7,3,'2022-12-20 22:17:28+08','https://tass.ru/proisshestviya/16642777','На окраине Новой Каховки обнаружили тайник с танковыми снарядами'),
+	 ('https://tass.ru/politika/16642915',10,3,'2022-12-20 22:16:55+08','https://tass.ru/politika/16642915','Лавров: ЮНЕСКО в 2022 году не предоставил свою эгиду ни одному мероприятию в России'),
+	 ('https://tass.ru/obschestvo/16642755',1,3,'2022-12-20 22:15:36+08','https://tass.ru/obschestvo/16642755','СМИ: на юге Афганистана зафиксировали вспышку неизвестного заболевания');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/ekonomika/16642763',9,3,'2022-12-20 22:15:06+08','https://tass.ru/ekonomika/16642763','Россия в ноябре стала крупнейшим экспортером нефти в Китай'),
+	 ('https://tass.ru/obschestvo/16642785',1,3,'2022-12-20 22:14:58+08','https://tass.ru/obschestvo/16642785','Более 2,5 тыс. многодетных семей получили в Подмосковье земельные участки в 2022 году'),
+	 ('https://tass.ru/proisshestviya/16642793',7,3,'2022-12-20 22:13:26+08','https://tass.ru/proisshestviya/16642793','Суд приговорил петербуржца к 18 годам за убийство продавщицы магазина интимных товаров'),
+	 ('https://tass.ru/nedvizhimost/16642773',5,3,'2022-12-20 22:12:24+08','https://tass.ru/nedvizhimost/16642773','Первый этап реконструкции бульвара в Пресненском районе Москвы завершится в 2025 году'),
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16642675',4,3,'2022-12-20 22:12:17+08','https://tass.ru/mezhdunarodnaya-panorama/16642675','В ООН заявили, что санкции США нарушают право иранцев на жизнь и здоровье'),
+	 ('https://tass.ru/armiya-i-opk/16642831',4,3,'2022-12-20 22:12:01+08','https://tass.ru/armiya-i-opk/16642831','Путин проведет 21 декабря расширенное заседание коллегии Минобороны'),
+	 ('https://tass.ru/obschestvo/16642735',1,3,'2022-12-20 22:11:33+08','https://tass.ru/obschestvo/16642735','Билл Гейтс планирует работать над методами борьбы с пандемиями в 2023 году'),
+	 ('https://tass.ru/obschestvo/16642593',1,3,'2022-12-20 22:09:23+08','https://tass.ru/obschestvo/16642593','Более 60 школьников приняли участие в финале конкурса по агрогенетике в Нижнем Новгороде'),
+	 ('https://tass.ru/obschestvo/16642705',1,3,'2022-12-20 22:08:02+08','https://tass.ru/obschestvo/16642705','Дума приняла в I чтении проект об исключительном праве "Почты России" на доставку пенсий'),
+	 ('https://tass.ru/obschestvo/16642685',1,3,'2022-12-20 22:07:44+08','https://tass.ru/obschestvo/16642685','Минобрнауки анализирует предложения по национальной системе высшего образования');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16642649',4,3,'2022-12-20 22:07:32+08','https://tass.ru/mezhdunarodnaya-panorama/16642649','Польша обратилась к СЕ с просьбой посодействовать в получении компенсаций от Германии'),
+	 ('https://tass.ru/obschestvo/16642639',1,3,'2022-12-20 22:05:46+08','https://tass.ru/obschestvo/16642639','В Омске выбросы в атмосферу снизились с 2017 года на 20%'),
+	 ('https://tass.ru/ekonomika/16642625',9,3,'2022-12-20 22:05:14+08','https://tass.ru/ekonomika/16642625','Минпромторг заявил об отсутствии в России дефицита новых легковых автомобилей'),
+	 ('https://tass.ru/obschestvo/16642609',1,3,'2022-12-20 22:03:55+08','https://tass.ru/obschestvo/16642609','Генконсул РФ надеется, что Tez Tour до 22 декабря вывезет туристов из Хургады'),
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16642591',4,3,'2022-12-20 22:02:39+08','https://tass.ru/mezhdunarodnaya-panorama/16642591','Жителя Белоруссии задержали с беспилотником у границы с Литвой'),
+	 ('https://tass.ru/ekonomika/16642497',9,3,'2022-12-20 22:02:24+08','https://tass.ru/ekonomika/16642497','Свердловские строители из-за падения спроса нашли новые рынки в Поволжье, Сибири и Турции'),
+	 ('https://tass.ru/sport/16642691',8,3,'2022-12-20 22:02:20+08','https://tass.ru/sport/16642691','Третьяк заявил, что Федерация хоккея России всегда настроена на сотрудничество с ОКР'),
+	 ('https://tass.ru/mezhdunarodnaya-panorama/16642721',4,3,'2022-12-20 22:01:53+08','https://tass.ru/mezhdunarodnaya-panorama/16642721','Штайнмайер в беседе с Си Цзиньпином попросил КНР подействовать на РФ для прекращения СВО'),
+	 ('https://tass.ru/obschestvo/16642603',1,3,'2022-12-20 22:00:37+08','https://tass.ru/obschestvo/16642603','В 2022 году в два раза выросло число происшествий на воде в праздники'),
+	 ('https://tass.ru/ekonomika/16642551',9,3,'2022-12-20 21:59:52+08','https://tass.ru/ekonomika/16642551','Австрийская оппозиционная партия считает неадекватным решение ЕС о потолке цен на газ');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/ekonomika/16642631',9,3,'2022-12-20 21:59:19+08','https://tass.ru/ekonomika/16642631','Газ после аварии на газопроводе в Чувашии подается потребителям в полном объеме'),
+	 ('https://tass.ru/ekonomika/16642563',9,3,'2022-12-20 21:58:33+08','https://tass.ru/ekonomika/16642563','Объем торгов на Мосбирже с начала 2022 года превысил 1 квадриллион рублей'),
+	 ('https://tass.ru/obschestvo/16642301',1,3,'2022-12-20 21:58:30+08','https://tass.ru/obschestvo/16642301','Количество фейков в сети в 2022 году выросло в шесть раз'),
+	 ('https://tass.ru/obschestvo/16642547',1,3,'2022-12-20 21:58:28+08','https://tass.ru/obschestvo/16642547','Турпоток на курорты туристического кластера Северного Кавказа с начала года вырос на 17%'),
+	 ('https://tass.ru/proisshestviya/16642503',7,3,'2022-12-20 21:58:03+08','https://tass.ru/proisshestviya/16642503','Из-за землетрясения в Калифорнии более 70 тыс. домов и предприятий остались без света'),
+	 ('https://tass.ru/obschestvo/16642569',1,3,'2022-12-20 21:55:40+08','https://tass.ru/obschestvo/16642569','В Белгородской области открыли памятную доску в честь погибшего в СВО сотрудника МЧС'),
+	 ('https://tass.ru/opinions/16641351',4,3,'2022-12-20 21:55:01+08','https://tass.ru/opinions/16641351','Кризис из-за дефицита: зачем в Австралии возвращают госрегулирование в энергетику страны'),
+	 ('https://tass.ru/obschestvo/16642375',1,3,'2022-12-20 21:52:21+08','https://tass.ru/obschestvo/16642375','В РВИО считают, что единый учебник по истории должен прежде всего рассказать о героях РФ'),
+	 ('https://tass.ru/kultura/16640151',3,3,'2022-12-20 21:51:47+08','https://tass.ru/kultura/16640151','В фондах Музея музыки обнаружили неизвестный ранее автограф Рахманинова'),
+	 ('https://tass.ru/ekonomika/16642521',9,3,'2022-12-20 21:51:44+08','https://tass.ru/ekonomika/16642521','MR Group и Большой театр объявили о начале сотрудничества');
+INSERT INTO public.processed_data (news_id,category_id,source_id,pub_date,link,title) VALUES
+	 ('https://tass.ru/obschestvo/16641811',1,3,'2022-12-20 21:51:27+08','https://tass.ru/obschestvo/16641811','Пришел, оспорил, победил: кто может "развалить" вашу сделку?'),
+	 ('https://tass.ru/obschestvo/16642451',1,3,'2022-12-20 21:51:13+08','https://tass.ru/obschestvo/16642451','В Саратовской области запустили программу "Карту гостя" со скидками для туристов');
