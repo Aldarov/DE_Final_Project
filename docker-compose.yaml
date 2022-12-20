@@ -75,8 +75,8 @@ services:
   postgres:
     image: postgres:13
     environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
+      POSTGRES_USER: ${AIRFLOW_USER}
+      POSTGRES_PASSWORD: ${AIRFLOW_PASSWORD}
       POSTGRES_DB: airflow
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
@@ -90,11 +90,11 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_DB=news_analysis
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:5432'
     volumes:
       - db:/var/lib/postgresql/data
       - ./src/config/init.sql:/docker-entrypoint-initdb.d/init.sql
